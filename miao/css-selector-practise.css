@@ -1,13 +1,13 @@
 body:nth-child(1){
   color:red;
 }
-[tabindex="-1"]:hover{
+[tabindex="1"]:hover{
   color: red;
 }
-[tabindex="-1"]:active{
+[tabindex="1"]:active{
   color:green;
 }
-[tabindex="-1"]:focus{
+[tabindex="1"]:focus{
   color:blue;
 }
 .c :first-child {
@@ -21,10 +21,10 @@ body:nth-child(1){
 }
 
 a{
-  color: orange;
+  color: pink;
 }
 a:visited{
-  color: pink;
+  color: orange;
 }
 
 [href^='mailto:' i]{
@@ -52,15 +52,21 @@ a:visited{
   color: red ;
 }
 
-.b ul :nth-child(n + 35){
+.b ul :nth-child(n + 35):nth-child(-n+ 51){
   color:blue;
 }
-.b ul :nth-child(n + 51){
+/* .b ul :nth-child(n + 51){
   color:black;
-}
+} */
 .b ul :nth-child(n + 65){
   color:green;
 }
 
-
+.prime ul :nth-child(2n+4),
+.prime ul :nth-child(3n+6),
+.prime ul :nth-child(5n+10),
+.prime ul :nth-child(7n+14)
+{
+  color:red;
+}
 
