@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    
+    li{
+      list-style-type: none;
+      text-align: left;
+    }
+    .province{
+      vertical-align: top;
+      display: inline-block;
+      background-color: #fff;
+      width: 200px;
+      
+    }
+    
+    .province_GD{
+      height: 24px;
+      overflow: hidden;
+    }
+    .province_GD:hover{
+      height: 100%;
+    }
+
+    
+
+  
+
+.c2{
+  position: relative;
+  display: block;
+  width: 80px; 
+  height: 18px;
+  overflow: hidden;
+  
+}
+
+.c2:hover{
+  overflow: visible;
+  width: 100%;
+  height: 100%;
+}
+
+.gz{
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    
+  }
+  .gzq{
+    vertical-align: top;
+    display: inline-block;
+    position: relative;
+    margin-left:40px ;
+    margin-top: -20px;
+
+  }
+
+  .q{
+    position: relative;
+  }
+
+  .q:hover{
+    background-color: yellow;
+    visibility: visible;
+    
+  }
+
+
+.city{
+  text-align: left;
+}
+
+
+
+
+  .q3,.jd{
+    visibility: visible;
+    
+  }
+
+  
+
+  .py,.pyj{
+    display: inline-block;
+    position: relative;
+    color: red;
+  }
+
+  .pyj{
+    visibility: visible;
+    
+  }
+
+  
+  
+
+
+  </style>
+</head>
+<body>
+  <ul class="province_ul">
+    <li class="province">北京</li>
+    <li class="province">上海</li>
+    <li class="province province_GD">
+      <div class="GD">广东* 
+        
+          <ul>
+          <li class="city">深圳市</li>
+          <li class="city c2">
+            <div class="gz">广州市></div>
+            <ul class="gzq">
+              <li class="q">越秀区</li>
+              <li class="q">荔湾区</li>
+              <li class="q q3">
+                <div class="py">番禺区></div>
+                <ul class="pyj">
+                  <li class="jd">市桥</li>
+                  <li class="jd">大石</li>
+                  <li class="jd">南郊</li>
+                  <li class="jd">洛浦</li>
+                  <li class="jd">化龙</li>
+                </ul>
+                
+              </li>
+              <li class="q">花都区</li>
+              <li class="q">南沙区</li>
+            </ul>
+          </li>
+          <li class="city">东莞市</li>
+          <li class="city">中山市</li>
+          <li class="city">湛江市</li>
+        </ul>
+      </div>
+      </div>
+      
+    </li>
+    <li class="province">福建</li>
+    <li class="province">江苏</li>
+  </ul>
+</body>
+</html>
