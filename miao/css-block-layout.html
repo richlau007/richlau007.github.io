@@ -1,109 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    body{
+    body {
       min-width: 150px;
       margin: 0;
     }
-    .main{
+
+    .main {
       width: 600px;
       margin: auto;
     }
-    .head{
+
+    .head {
       margin-top: 0;
       color: white;
       background-color: black;
     }
-    .footer{
-      background:#EE8AEE ;
+
+    .footer {
+      background: #EE8AEE;
       margin: 16px 0;
     }
-    .c{
-    text-align: center;
+
+    .c {
+      text-align: center;
     }
-    p{
-      margin: 0;
-      border-width: 0 0 1px 0;
-      border-bottom-style: dotted;
-    }
-    .ll{
-      border: none;
-    }
-    .alldiv,.iiidiv{
+
+
+    .alldiv,.iiidiv {
       height: 205px;
       padding: 0;
     }
-    .d{
+
+    .d {
       box-sizing: border-box;
       width: 180px;
       height: 40px;
-      background-color:#FFC0CB ;
+      background-color: #FFC0CB;
       border: 3px solid black;
       text-align: center;
       line-height: 32px;
       margin-bottom: 15px;
       /* 文本对齐问题未解决*/
     }
-    
 
-    .d:hover,.i:hover{
+
+    .d:hover,.i:hover {
       background-color: red;
     }
 
 
 
-    .alldiv :nth-child(4n+5){
+    .alldiv :nth-child(4n+5) {
       margin-top: -220px;
-      
+
     }
 
-    .alldiv :nth-child(n+5){
+    .alldiv :nth-child(n+5) {
       margin-left: 210px;
     }
 
-    .alldiv :nth-child(n+9){
+    .alldiv :nth-child(n+9) {
       margin-left: 420px;
     }
 
 
 
-
-
-
-    .i{
+    .i {
       box-sizing: border-box;
       display: inline-block;
-      margin-bottom: 15px ;
+      margin-bottom: 15px;
       width: 180px;
       height: 40px;
-      background-color:#FFC0CB ;
+      background-color: #FFC0CB;
       border: 3px solid black;
       text-align: center;
-      
+      font-size: initial;
+
     }
 
-    .iiidiv :nth-child(3n+2){
+    .iiidiv {
+      font-size: 0;
+    }
+
+    .iiidiv :nth-child(3n+2) {
       margin-left: 30px;
     }
 
-    .iiidiv :nth-child(3n+3){
+    .iiidiv :nth-child(3n+3) {
       margin-left: 30px;
     }
+
+    ul{
+      margin: 0;
+      padding: 0;
+    }
+    li{
+      margin: 0;
+      padding: 0;
+      border-width: 0 0 1px 0;
+      border-bottom-style: dotted;
+    }
+
+    ul :nth-child(5){
+      margin-bottom: -1px;
+    }
+
+
+    ul{
+      overflow: hidden;
+    }
+
+
+
+
 
   </style>
 </head>
+
 <body>
   <div class="head ">
     <div class="main">hello Rich 请调整浏览器窗口大小～～～</div>
   </div>
   <div class="body main">
     <div>
-      页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px
+      页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体
+      宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px
+      页面主体 宽度600px
     </div>
     <h2>block 布局</h2>
     <div class="alldiv">
@@ -123,23 +152,27 @@
 
     <h2>inline-block布局</h2>
     <div class="iiidiv">
-      <div class="i">产品</div><div class="i">产品</div><div class="i">产品</div><div class="i">产品</div><div class="i">产品</div><div class="i">产品</div><div class="i">产品</div><div class="i">产品</div><div class="i">产品</div><div class="i">产品</div><div class="i">产品</div><div class="i">产品</div>
+      <div class="i">产品</div>
+      <div class="i">产品</div>
+      <div class="i">产品</div>
+      <div class="i">产品</div>
+      <div class="i">产品</div>
+      <div class="i">产品</div>
+      <div class="i">产品</div>
+      <div class="i">产品</div>
+      <div class="i">产品</div>
+      <div class="i">产品</div>
+      <div class="i">产品</div>
+      <div class="i">产品</div>
     </div>
-<!-- ？？？？怎么处理行内块状元素之间的空白问题？ -->
-
-    <div >
-      <p>link</p>
-      <p>link</p>
-      <p>link</p>
-      <p>link</p>
-      <p class="ll">link</p>
-    </div>
-
-    
-
-
-
-
+    <!-- 将父元素font-size：0； 子元素font-size：initial; -->
+    <ul>
+      <li>link</li>
+      <li>link</li>
+      <li>link</li>
+      <li>link</li>
+      <li>link</li>
+    </ul>
   </div>
   <div class="footer ">
     <div class="c">
@@ -147,5 +180,13 @@
       本页所有布局均使用块元素
     </div>
   </div>
+
+
+  <br>
+  <hr>
+  <h3>踩过的坑</h3>
+  <div>display:inline-block;的兄弟元素之间存在一个匿名文本的间隔，需要将父元素的font-size：0；同时将子元素的font-size：initial；</div>
+  <div>link部分的底部虚线，是由border-bottom组成的，将link元素的全部兄弟元素加上虚线之后，将最后一个link元素设置margin-bottom：-1px；相应父元素overflow:hidden;,最终实现父元素border-bottom向上移动，超出父元素部分隐藏。</div>
 </body>
+
 </html>

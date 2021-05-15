@@ -7,25 +7,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-
-    div{
+    div {
       border: 10px dashed rgba(0, 0, 100, 0.5);
       padding-top: 30px;
     }
- 
+
     ul {
       margin: 0;
       padding: 0;
       list-style: none;
       white-space: nowrap;
     }
-    li{
+
+    li {
       padding: 0 5px;
       margin: 0;
-      
     }
 
-    li:hover{
+    li:hover {
       background: yellow;
     }
 
@@ -47,33 +46,30 @@
       left: 0;
     }
 
-    .city{
+    .city {
       position: relative;
-      
+
     }
 
-    #q_ul,#j_ul{
+    #q_ul,
+    #j_ul {
       display: inline-block;
       position: absolute;
     }
 
-    .q,.j{
+    .q,
+    .j {
       position: relative;
-    
+
     }
 
-    li >ul{
+    li>ul {
       visibility: hidden;
     }
 
-    li:hover > ul{
+    li:hover>ul {
       visibility: visible;
     }
-
-
-
-
-
   </style>
 </head>
 
@@ -113,6 +109,7 @@
   </div>
 
   <hr>
+  <h3>踩过的坑</h3>
   ul 有margin/padding会影响布局，值设置为0
   <br>
   定位元素，是基于父元素定位，父元素大小决定子元素的位置。当子元素以inline-block时，特别是文字，要设置white-space：nowarp；

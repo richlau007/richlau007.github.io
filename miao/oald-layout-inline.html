@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body,html{
+      margin: 0;
+      padding: 0;
+      font-size: 0;
+    }
+
+    main{
+      margin: 0;
+      padding: 0;
+      min-width: 900px;
+    }
+
+    .d,.dd{
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .d200{
+      width: 200px;
+      height: 100vh;
+    }
+    .dd{
+      position: relative;
+    }
+
+    .d,.d2,.d3 {
+      box-sizing: border-box;
+      border:3px solid black;
+    
+    }
+
+    .d2{
+      width: calc(100vw - 600px);
+      height: 200px;
+      min-width: 300px;
+    }
+
+    .d3{
+      height: calc(100vh - 200px);
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Rich's  inline布局
+  </h1>
+  <main>
+    <div class="d d200"></div>
+    <div class="dd">
+      <div class="d2"></div>
+      <div class="d3"></div>
+    </div>
+    <div class="d d200"></div>
+    <div class="d d200"></div>
+  </main>
+
+  <br>
+  <br>
+  <hr>
+  <h3>踩过的坑</h3>
+  width: calc(100vw - 600px);
+  <div>c 和（之间不可以有空格</div>
+  <div>“-”左右两边有空格</div>
+  
+</body>
+</html>
