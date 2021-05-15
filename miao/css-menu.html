@@ -1,147 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    
-    li{
-      list-style-type: none;
-      text-align: left;
+
+    div{
+      border: 10px dashed rgba(0, 0, 100, 0.5);
+      padding-top: 30px;
     }
-    .province{
-      vertical-align: top;
-      display: inline-block;
-      background-color: #fff;
-      width: 200px;
+ 
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      white-space: nowrap;
+    }
+    li{
+      padding: 0 5px;
+      margin: 0;
       
     }
-    
-    .province_GD{
-      height: 24px;
-      overflow: hidden;
-    }
-    .province_GD:hover{
-      height: 100%;
+
+    li:hover{
+      background: yellow;
     }
 
+    #province_ul {
+      position: relative;
+      height: 300px;
+    }
+
+
+    .province {
+      position: relative;
+      display: inline-block;
+      vertical-align: top;
+      margin: 0 20px;
+    }
+
+    #city_ul {
+      position: absolute;
+      left: 0;
+    }
+
+    .city{
+      position: relative;
+      
+    }
+
+    #q_ul,#j_ul{
+      display: inline-block;
+      position: absolute;
+    }
+
+    .q,.j{
+      position: relative;
     
+    }
 
-  
+    li >ul{
+      visibility: hidden;
+    }
 
-.c2{
-  position: relative;
-  display: block;
-  width: 80px; 
-  height: 18px;
-  overflow: hidden;
-  
-}
-
-.c2:hover{
-  overflow: visible;
-  width: 100%;
-  height: 100%;
-}
-
-.gz{
-    display: inline-block;
-    position: relative;
-    vertical-align: top;
-    
-  }
-  .gzq{
-    vertical-align: top;
-    display: inline-block;
-    position: relative;
-    margin-left:40px ;
-    margin-top: -20px;
-
-  }
-
-  .q{
-    position: relative;
-  }
-
-  .q:hover{
-    background-color: yellow;
-    visibility: visible;
-    
-  }
-
-
-.city{
-  text-align: left;
-}
+    li:hover > ul{
+      visibility: visible;
+    }
 
 
 
-
-  .q3,.jd{
-    visibility: visible;
-    
-  }
-
-  
-
-  .py,.pyj{
-    display: inline-block;
-    position: relative;
-    color: red;
-  }
-
-  .pyj{
-    visibility: visible;
-    
-  }
-
-  
-  
 
 
   </style>
 </head>
+
 <body>
-  <ul class="province_ul">
-    <li class="province">北京</li>
-    <li class="province">上海</li>
-    <li class="province province_GD">
-      <div class="GD">广东* 
-        
-          <ul>
-          <li class="city">深圳市</li>
-          <li class="city c2">
-            <div class="gz">广州市></div>
-            <ul class="gzq">
-              <li class="q">越秀区</li>
-              <li class="q">荔湾区</li>
-              <li class="q q3">
-                <div class="py">番禺区></div>
-                <ul class="pyj">
-                  <li class="jd">市桥</li>
-                  <li class="jd">大石</li>
-                  <li class="jd">南郊</li>
-                  <li class="jd">洛浦</li>
-                  <li class="jd">化龙</li>
+  <div>
+    <ul id="province_ul">
+      <li class="province">北京</li>
+      <li class="province">上海</li>
+      <li class="province">广东
+        <ul id="city_ul">
+          <li class="city">深圳</li>
+          <li class="city">广州
+            <ul id="q_ul">
+              <li class="q">白云</li>
+              <li class="q">天河</li>
+              <li class="q">南沙</li>
+              <li class="q">花都</li>
+              <li class="q">番禺
+                <ul id="j_ul">
+                  <li class="j">大石</li>
+                  <li class="j">洛浦</li>
+                  <li class="j">市桥</li>
+                  <li class="j">南郊</li>
+                  <li class="j">化龙</li>
                 </ul>
-                
               </li>
-              <li class="q">花都区</li>
-              <li class="q">南沙区</li>
             </ul>
           </li>
-          <li class="city">东莞市</li>
-          <li class="city">中山市</li>
-          <li class="city">湛江市</li>
+          <li class="city">惠州</li>
+          <li class="city">潮州</li>
+          <li class="city">湛江</li>
         </ul>
-      </div>
-      </div>
-      
-    </li>
-    <li class="province">福建</li>
-    <li class="province">江苏</li>
-  </ul>
+      </li>
+      <li class="province">陕西</li>
+      <li class="province">贵州</li>
+    </ul>
+  </div>
+
+  <hr>
+  ul 有margin/padding会影响布局，值设置为0
+  <br>
+  定位元素，是基于父元素定位，父元素大小决定子元素的位置。当子元素以inline-block时，特别是文字，要设置white-space：nowarp；
+
 </body>
+
 </html>
