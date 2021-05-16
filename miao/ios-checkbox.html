@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .border{
+      padding: 0;
+      box-sizing: border-box;
+      width: 270px;
+      height: 155px;
+      border-radius: 77.5px;
+      position: relative;
+
+      background-color: #2ded4a;
+
+    }
+    .O{
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      /* box-sizing: border-box; */
+      width: 131px;
+      height: 131px;
+      padding: 0 0px;
+      border-radius: 67.5px;
+      border: 2px solid #cdcdcd;
+      box-shadow: 10px 10px 10px #cdcdcd99;
+      transition: margin-left 1s,padding 1s ,width 0.5s;
+      background-color:#fff;
+    }
+
+    .white_bg{
+     
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 270px;
+      height: 155px;
+      box-sizing: border-box;
+      border: 4px solid #cdcdcd;
+      border-radius: 77.5px;
+      background-color: #fff;
+      transition: 1s;
+
+    }
+
+
+
+    input:checked ~ label .O{ 
+      margin-left: 115px;  
+      border: 2px solid white;
+      width: 81px;
+      padding: 0 25px;
+      transition: padding 0.5s,width 1s,margin-left 1s;
+    }
+
+
+  
+
+    input:checked ~ .white_bg{
+      width: 65px;
+      height: 50px;
+      top: 50.25px;
+      left: 190px;
+      border: 4px solid white;
+      transition: 1s;
+
+    }
+
+  </style>
+</head>
+<body>
+  <div class="border">
+    <input type="checkbox" hidden name="box" id="box">
+    <div class="white_bg"> </div>
+    <label for="box">
+    <div class="O"></div>
+    </label>
+    
+  </div>
+
+  
+</body>
+</html>
