@@ -1,0 +1,77 @@
+body{
+  min-width: 800px;
+}
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,th{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 8px;
+  height: 41px;
+  text-align: left;
+}
+
+
+thead>tr :nth-child(1){
+  width: 81px;
+}
+
+thead>tr :nth-child(2){
+  width: 184px;
+}
+thead>tr :nth-child(3){
+  width: 252px;
+}
+thead>tr :nth-child(4){
+  width: 237px;
+}
+
+/* .table */
+
+.table>thead>tr>th{
+  border-bottom: 1px solid black;
+}
+
+.table>tbody>tr>th,.table>tbody>tr>td{
+  border-bottom: 1px solid #dee2e6
+}
+
+/* .table-dark */
+
+.table-dark{
+  color: white;
+  background: #212529;
+}
+
+.table-active{
+  background-color: #373b3e;
+}
+
+.table-dark>thead>tr>th{
+  border-bottom: 1px solid white;
+}
+
+.table-dark>tbody>tr>th,.table-dark>tbody>tr>td{
+  border-bottom: 1px solid #373b3e
+}
+
+
+/* table table-striped */
+.table-striped tbody tr:nth-child(2n+1){
+  background-color: rgba(0, 0, 0, 0.05);
+}
+[class="table table-dark table-striped"] tbody tr:nth-child(2n+1){
+  background-color: #2c3034;
+}
+
+/* table table-hover */
+.table-hover tbody tr:nth-child(1),.table-hover tbody>tr:hover{
+background-color: rgba(0, 0, 0, 0.075);
+}
+
+[class*="table-dark table-hover"] tbody tr:hover,[class*="table-dark table-hover"] tbody tr:nth-child(1){
+  background-color: #323539;
+}

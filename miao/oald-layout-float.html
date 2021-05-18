@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body,html{
+      margin: 0;
+      padding: 0;
+      min-width: 900px;
+    }
+    div{
+      border: 1px solid red;
+      box-sizing: border-box;
+    }
+    .d{
+      width: 200px;
+      height: 100vh;
+    }
+    .d1{
+      float: left;
+    }
+    .d2{
+      width: calc(100vw - 600px);
+      height: 100vh;
+      float: left;
+      min-width: 300px;
+    }
+    .d21{
+      height: 200px;
+    }
+
+    .d22{
+      height: 100vh-200px;
+    }
+
+    .d3,.d4{
+      float: right;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="d d1"></div>
+  <div class="d2">
+    <div class="d21"></div>
+    <div class="d22"></div>
+  </div>
+  <div class="d d3"></div>
+  <div class="d d4"></div>
+  
+</body>
+</html>
