@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  
   <style>
-    table{
+    table {
       border-collapse: collapse;
       padding: 0;
-      
+      position: relative;
+
     }
-    td{
+
+    td {
       padding: 0;
       box-sizing: border-box;
       width: 55px;
       height: 55px;
       border: 5px solid #0000f0;
-      text-align: center ;
+      text-align: center;
       position: relative;
-      
+
     }
 
     /* td::after{
@@ -30,7 +34,8 @@
       visibility: visible;
     } */
 
-    span{
+    /*内嵌span*/
+    .tablespan span {
       position: absolute;
       box-sizing: border-box;
       top: -5px;
@@ -41,12 +46,89 @@
       visibility: hidden;
 
     }
-    td:hover  span{
+
+    .tablespan td:hover span {
       visibility: visible;
     }
 
+    /*伪类*/
+    .tablebefore td:before {
+      content: "";
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      box-sizing: border-box;
+      border: 5px solid transparent;
+      top: -5px;
+      left: -5px;
+      pointer-events: none;
+      /* z-index: 5; */
+    }
 
-    div{
+    .tablebefore td:hover::before {
+      border-color: red;
+    }
+
+    /* inline-block */
+    .dib-box {
+      width: 170px;
+      font-size: 0;
+      position: relative;
+    }
+
+    .dib {
+      display: inline-block;
+      box-sizing: border-box;
+      width: 60px;
+      height: 60px;
+      margin-right: -5px;
+      margin-bottom: -5px;
+      border: 5px solid blue;
+      font-size: initial;
+      text-align: center;
+      line-height: 50px;
+    }
+
+    .dib:hover {
+      position: relative;
+      border-color: red;
+      z-index: 5px;
+    }
+
+    /* ul li  inline-block */
+    ul{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0;
+      width: 170px;
+      position: relative;
+    }
+
+    li{
+      display: inline-block;
+      box-sizing: border-box;
+      width: 60px;
+      height: 60px;
+      border: 5px solid blue;
+      font-size: initial;
+      margin-right: -5px;
+      margin-bottom: -5px;
+      text-align: center;
+      line-height: 50px;
+      position: relative;
+    }
+
+    li:hover{
+      border-color: red;
+      z-index: 5;
+
+    }
+
+    /* float div */
+    
+
+    /* div{
       margin-top: 50px;
       position: relative;
       width: 300px;
@@ -67,11 +149,42 @@
     div:hover p{
       font-size: 50px;
       transition: 2s;
+    } */
+    .tb_cell{
+      display: table-cell;
+      vertical-align: bottom;
+      width: 500px;
+      height: 100px;
     }
+    .tb_cell:hover{
+      font-size:300%;
+      transition: 1s;
+    }
+
+    .pad_div{
+      width: 300px;
+      height: 100px;
+      padding-top: 150px;
+      line-height: 1;
+      vertical-align: bottom;
+    }
+
+    .pad_div:hover{
+      padding-top: 70px;
+      font-size: 300%;
+      line-height: 3;
+      transition: 1s;
+      
+    }
+
+
   </style>
 </head>
+
 <body>
-  <table>
+
+  <h2>td内嵌span</h2>
+  <table class="tablespan">
     <tr>
       <td class=“td”>1<span class="c1"></span></td>
       <td class=“td”>2<span></span></td>
@@ -89,8 +202,99 @@
     </tr>
   </table>
 
-  <div>
-    <p>订阅博客</p>
+  <hr>
+  <h2>td 伪类</h2>
+
+  <table class="tablebefore">
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>8</td>
+      <td>9</td>
+    </tr>
+  </table>
+
+  <hr>
+  <h2>div inline-block布局</h2>
+  <div class="dib-box">
+    <div class="dib">1</div>
+    <div class="dib">2</div>
+    <div class="dib">3</div>
+    <div class="dib">4</div>
+    <div class="dib">5</div>
+    <div class="dib">6</div>
+    <div class="dib">7</div>
+    <div class="dib">8</div>
+    <div class="dib">9</div>
   </div>
+
+  <hr>
+  <h2>ul li inline-block</h2>
+  <ul class="li9_ul">
+    <li class="li9">1</li>
+    <li class="li9">2</li>
+    <li class="li9">3</li>
+    <li class="li9">4</li>
+    <li class="li9">5</li>
+    <li class="li9">6</li>
+    <li class="li9">7</li>
+    <li class="li9">8</li>
+    <li class="li9">9</li>
+  </ul>
+
+  <hr>
+  <h2>float div</h2>
+  <div class="fdd">
+    <div class="fd">1</div>
+    <div class="fd">2</div>
+    <div class="fd">3</div>
+    <div class="fd">4</div>
+    <div class="fd">5</div>
+    <div class="fd">6</div>
+    <div class="fd">7</div>
+    <div class="fd">8</div>
+    <div class="fd">9</div>
+  </div>
+  <!-- table
+  1.伪类
+  2.行列边框，hover td边框
+  3.边框颜色类型，边框类型优先级不同
+
+  定位
+  1.固定定位
+  2.行内块
+  3.浮动
+
+  列表
+  ul li
+
+  ul li a (古老的方法) -->
+
+  <!-- <div>
+    <p>订阅博客</p>
+  </div> -->
+
+<hr>
+<h2>table-cell</h2>
+  <div class="tb_cell">订阅博客</div>
+
+  <hr>
+  <h2>padding line-height</h2>
+  <div class="pad_div">订阅博客</div>
+
+<hr>
+  要求：一个标签来做
+  1.table-cell；
+  2.padding line-height；
 </body>
+
 </html>

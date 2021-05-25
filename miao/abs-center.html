@@ -24,24 +24,41 @@
       /* background-color: red */
       ;
     }
+/* 利用inline-block */
+    .il_div {
 
-    .position {
-      position: relative;
       width: 300px;
       height: 300px;
       border: 1px solid #000;
+      font-size: 0;
+      line-height: 300px;
       
 
     }
 
-    .position div {
-      position: absolute;
+    .il_div div {
+      display: inline-block;
+      font-size: initial;
+      line-height: normal;
+      vertical-align: middle;
       text-align: center;
+    }
+
+    .p_div{
+      width: 300px;
+      height: 300px;
+      border: 1px solid black;
+      position: relative;
+    }
+
+    .p_div div{
+      position:absolute;
       top: 0;
+      left: 0;
       right: 0;
       bottom: 0;
-      left: 0;
-      vertical-align: middle;
+      margin-top: auto;
+      margin-bottom: auto;
 
     }
   </style>
@@ -57,14 +74,25 @@
       </tr>
     </table>
 
-    <h2>position:relative;</h2>
-    <div class="position">
+    <h2>inline-block line-height父元素为0， 与父元素的垂直对齐 父元素font-size：0；</h2>
+    <div class="il_div">
       <div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero qui dicta, asperiores, perferendis nostrum neque
         iste aperiam aliquam reprehenderit eaque sint possimus pariatur? Quae amet delectus perferendis sapiente
         repudiandae dolorem?
       </div>
     </div>
+
+    <h2>定位  不知道子元素的高度的时候，无法做垂直居中定位 </h2>
+    <div class="p_div">
+      <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste ipsam, ea placeat incidunt vitae soluta qui quas quo vero corrupti eaque aspernatur quibusdam minus nulla cumque suscipit accusantium doloremque provident.</div>
+    </div>
+
+    定位
+    行内
+    表格
+    transform
+    
 </body>
 
 </html>
