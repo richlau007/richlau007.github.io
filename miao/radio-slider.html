@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+    body {
+      position: relative;
+    }
+
+    input{
+      position: absolute;
+      z-index: 999;
+    }
+    input:nth-child(1){
+      top: 300px;
+      left: 50px;
+    }
+    input:nth-child(2){
+      top: 300px;
+      left: 100px;
+    }
+    input:nth-child(3){
+      top: 300px;
+      left: 150px;
+    }
+    input:nth-child(4){
+      top: 300px;
+      left: 200px;
+    }
+    /* div {
+      position: absolute;
+    } */
+
+    /* img{
+      position:absolute;
+    } */
+    img {
+      /* margin-left: 300px; */
+      position: absolute;
+      left: 500px;
+      
+      width: 500px;
+     transition: left 0.5s 1s;
+      
+    
+    }
+
+    input:nth-child(1):checked ~ div img:nth-child(1),
+    input:nth-child(2):checked ~ div img:nth-child(2),
+    input:nth-child(3):checked ~ div img:nth-child(3),
+    input:nth-child(4):checked ~ div img:nth-child(4)
+     {
+      left: 0;
+      z-index: 222;
+      transition: 1s;
+
+    }
+
+    div{
+      border: 1px solid gray;
+      width: 500px;
+      height: 334px;
+      position: relative;
+      overflow: hidden;
+      
+    }
+    /* input:nth-child(3):checked ~ div img:nth-child(3){
+      /* width: 200%; */
+      /* margin-left: 0; */
+    /* } */ 
+  </style>
+</head>
+
+<body>
+
+<input type="radio" name="c">
+<input type="radio" name="c" checked>
+<input type="radio" name="c">
+<input type="radio" name="c">
+  <div>
+    <img src="./radio-slider_1.jpeg" alt="" id="i1">
+    <img src="./radio-slider_2.jpeg" alt="" id="i2">
+    <img src="./radio-slider_3.jpeg" alt="" id="i3">
+    <img src="./radio-slider_4.jpeg" alt="" id="i4">
+  </div>
+  <div>
+    <img src="./radio-slider_1.jpeg" alt="" id="i1">
+    <img src="./radio-slider_2.jpeg" alt="" id="i2">
+    <img src="./radio-slider_3.jpeg" alt="" id="i3">
+    <img src="./radio-slider_4.jpeg" alt="" id="i4">
+  </div>
+  <div>
+    <img src="./radio-slider_1.jpeg" alt="" id="i1">
+    <img src="./radio-slider_2.jpeg" alt="" id="i2">
+    <img src="./radio-slider_3.jpeg" alt="" id="i3">
+    <img src="./radio-slider_4.jpeg" alt="" id="i4">
+  </div>
+  <div>
+    <img src="./radio-slider_1.jpeg" alt="" id="i1">
+    <img src="./radio-slider_2.jpeg" alt="" id="i2">
+    <img src="./radio-slider_3.jpeg" alt="" id="i3">
+    <img src="./radio-slider_4.jpeg" alt="" id="i4">
+  </div>
+
+
+
+</body>
+
+</html>

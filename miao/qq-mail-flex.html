@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,body{
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    body{
+      display: flex;
+      min-width: 300px;
+      min-height: 300px;
+      flex-wrap: wrap;
+    }
+    div:nth-child(1){
+      width: 100vw;
+      height: 100px;
+      background-color: #000;
+      color: white;
+    }
+
+    div:nth-child(2){
+      height: calc(100% - 100px);
+      width: 80px;
+      background-color: blue;
+      
+    }
+    div:nth-child(3){
+      max-height: calc(100% - 100px);
+      overflow: scroll;
+      width: 200px;
+      flex-grow: 1;
+    }
+  </style>
+</head>
+<body>
+  <div>QQ邮箱</div>
+  <div></div>
+  <div><h1>overflow 怎么解决？</h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis quas nam laboriosam corporis quisquam laudantium rem beatae aperiam sequi, eligendi eos, nesciunt veniam accusantium eius a, tempore facere asperiores voluptatum?
+  Vitae appti laborum cupiditate praesentium consequuntur accusamus iusto quae tenetur. Molestiae esse rem aliquid earum, cum reprehenderit labore accusantium ipsam dignissimos, quas pariatur optio nostrum, consequuntur mollitia ut.
+  Aspernatur error iusto voluptates sapiente illo quod, harum corrupti perspiciatis alias aperiam amet. Quos ducimus ea amet! Nemo dolor, itaque adipisci quisquam excepturi inventore neque nam. Assumenda, quaerat? Fugiat, ullam?</div>
+</body>
+</html>
