@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 方法一 */
+    @keyframes turnaround1 {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .way1 {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      animation: turnaround1 5s linear infinite;
+      /* border-radius: 150px; */
+      /* background-color: red; */
+    }
+
+    .way1 div {
+      text-align: center;
+      animation: turnaround1 5s linear reverse infinite;
+    }
+
+
+
+
+    .way2 {
+      position: relative;
+      width: 300px;
+      padding: 150px 0;
+      text-align: center;
+    }
+
+
+    /* 方法二 */
+    .way2 {
+      animation: turnaround2 5s linear infinite;
+    }
+
+    @keyframes turnaround2 {
+      from {
+        transform: rotate(0deg) translate(150px) rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg) translate(150px) rotate(-360deg);
+      }
+    }
+
+    /* 方法三 */
+    @keyframes ho {
+      from {
+        left: 0;
+      }
+
+      to {
+        left: 300px;
+      }
+    }
+
+    @keyframes ver {
+      from {
+        top: 0;
+      }
+
+      100% {
+        top: 300px;
+      }
+    }
+
+    .way3 span {
+      display: inline-block;
+      position: relative;
+      animation: ho 1s cubic-bezier(.36, .01, .64, 1) alternate infinite, ver 1s -1.5s cubic-bezier(.36, .01, .64, 1) alternate infinite;
+    }
+
+    /* 方法4 */
+    
+    /* @keyframes h {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(300px);
+      }
+    }
+
+    @keyframes v {
+      from {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(300px);
+      }
+    }
+
+    .way4 span {
+      display: inline-block;
+      position: relative;
+      animation: h 1s cubic-bezier(.36, .01, .64, 1) alternate infinite, v 1s -1.5s cubic-bezier(.36, .01, .64, 1) alternate infinite;
+    } */
+
+      /* 多个动画先后进行，不能用相同的属性，transform：；同时用在“v” 和“h” 的关键帧中，后者就会覆盖前者 */
+
+
+
+
+
+
+  </style>
+</head>
+
+<body>
+  <div class="way1">
+    <div>灭霸</div>
+  </div>
+  <div class="way2">灭霸</div>
+
+  <div class="way3">
+    <span>灭霸</span>
+  </div>
+
+  <div style="margin: 150px 0;"></div>
+
+
+
+
+  <div style="padding-top: 300px;">方案一：2个元素 嵌套，互相反向旋转</div>
+  <div>方案二：1个元素 r t r 旋转 平移 方向回旋转</div>
+  <div>方案三：将圆周运动 分解成水平和垂直方向上2个运动，用bezier曲线拟合</div>
+</body>
+
+</html>

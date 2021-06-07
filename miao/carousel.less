@@ -1,0 +1,129 @@
+section {
+  position: relative;
+  font-size: 0;
+  width: 508px;
+  box-sizing: border-box;
+
+  div {
+    display : inline-block;
+    position: relative;
+    width   : 125px;
+    height  : 334px;
+    border  : 1px solid yellow;
+    overflow: hidden;
+
+    // &:hover {
+    //   span {
+    //     left      : 0;
+    //     transition: 1s;
+
+    //   }
+    // }
+
+    &:nth-of-type(1) {
+      span {
+        background-position: 0 0;
+      }
+    }
+
+    &:nth-of-type(2) {
+      span {
+        background-position: 25% 0;
+      }
+    }
+
+    &:nth-of-type(3) {
+      span {
+        background-position: 50% 0;
+      }
+    }
+
+    &:nth-of-type(4) {
+      span {
+        background-position: 75% 0;
+      }
+    }
+
+    span {
+      position         : absolute;
+      display          : inline-block;
+      left             : -100%;
+      width            : 125px;
+      height           : 334px;
+      background-repeat: no-repeat;
+      animation: moveright 1.3s ;
+      @keyframes moveright {
+        from{
+          left: 0;
+        }
+        to{
+          left: 100%;
+        }
+      }
+
+      &:nth-child(1) {
+        background-image: url(./radio-slider_1.jpeg);
+
+      }
+
+      &:nth-child(2) {
+        background-image: url(./radio-slider_2.jpeg);
+      }
+
+      &:nth-child(3) {
+        background-image: url(./radio-slider_3.jpeg);
+      }
+
+      &:nth-child(4) {
+        background-image: url(./radio-slider_4.jpeg);
+        // border:1px solid red;
+      }
+    }
+  }
+
+  input {
+    position: absolute;
+    z-index: 999;
+    bottom: 20px;
+    right: 20px;
+    width: 20px;
+    margin-left: auto;
+    &:nth-of-type(1){
+      margin-right:0;
+    }
+    &:nth-of-type(2){
+      margin-right:30px;
+    }
+    &:nth-of-type(3){
+      margin-right:60px;
+    }
+    &:nth-of-type(4){
+      margin-right:90px;
+    }
+    &:nth-child(1):checked ~ div span:nth-child(1) {
+          z-index: 99;
+          left: 0;
+          transition: 1s;
+          animation: none;
+        }  
+    &:nth-child(2):checked ~ div span:nth-child(2) {
+          z-index: 99;
+          left: 0;
+          transition: 1s;
+          animation: none;
+        }  
+    &:nth-child(3):checked ~ div span:nth-child(3) {
+          z-index: 99;
+          left: 0;
+          transition: 1s;
+          animation: none;
+        }  
+    &:nth-child(4):checked ~ div span:nth-child(4) {
+          z-index: 99;
+          left: 0;
+          transition: 1s;
+          animation: none;
+        }  
+  }
+
+}
