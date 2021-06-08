@@ -1,0 +1,104 @@
+<script>
+//   var x=600;
+//   console.log("x的值："+x);
+
+// // 写出表达式，当x是奇数时，y为真，否则为假
+// // 写出表达式，当x是偶数时，y为真，否则为假
+//   if(x % 2 ==1){
+//     console.log("x是奇数");
+//   }else{
+//     console.log("x是偶数");
+//   }
+
+// // 写出表达式，让y表示当前是x世纪
+//   console.log("当前是"+Math.ceil(x/100)+"世纪")
+
+// // 写出表达式，当x是闰年时，y为真，否则为假
+
+//   if(x%4===0&&x%400!=0){
+//     console.log("x是闰年");
+//   }else{
+//     console.log("x不是闰年");
+//   }
+
+  
+// // 写出表达式，当x是素数时（此时x为100以内的数），y为真，否则为假
+//   if(x<100){
+//     if(x==1||x==0){
+//       console.log(x + "不是素数");
+//     }else if(x%2==0&&x/2!=1){
+//       console.log(x+"不是素数");
+//     }else if(x % 3 == 0 && x / 3 != 1){
+//       console.log(x + "不是素数");
+//     }else if(x % 5 == 0 && x / 5 != 1){
+//       console.log(x + "不是素数");
+//     }else if(x % 7 == 0 && x / 7 != 1){
+//       console.log(x + "不是素数");
+//     }else{
+//       console.log(x+"是素数");
+//     }
+//   }else{
+//     console.log("x大于等于100")
+//   }
+
+// //x的5次方。
+// console.log(x+"的五次方"+x*x*x*x*x);
+// //x是否在50到100以内
+// if(x>=50&&x<=100){
+//   console.log(x+"在50到100以内");
+// }else{
+//   console.log(x+"不在50到100以内");
+
+// }
+
+// //x是否大于200且为3的倍数但不是7的倍数
+// console.log( x>200&&x%3==0&&x%7!=0? true:false)
+
+
+   var y = 5
+  console.log("y的值为：" + y) // 输出x
+  console.log("y的两倍为："+ 2 * y) // 输出x的两倍
+  console.log("y的平方；"+ y * y) // 输出x的平方
+  console.log("y的5次方为："+ y * y * y * y * y) // 输出x的五次平方
+  console.log(y >= 50 && y <= 100) // 输出x是否在50到100以内，是输出true，不是输出false
+  console.log(y % 2 == 1) // 输出x是否为奇数，是输出true，不是输出false
+  console.log(y % 2 == 0) // 输出x是否为偶数，是输出true，不是输出false
+  console.log("y的个位数为"+ y % 10) // 输出x的个位数
+  console.log("y的百位以下的数:"+ y % 100) // 输出x百位数以下的部分，对于2021，即输出21，对于2035，即输出35
+  console.log(y >= 200 && y%3 == 0 && y % 7 != 0) // 输出x是否大于200且为3的倍数但不是7的倍数。
+  console.log((y-y % 100) / 100 +1) // 输出x做为年份时，所在的世纪，对于2021即输出21，对于1864即输出19
+  console.log(y % 400 == 0 || y % 4==0 && y % 100 != 0) // 输出x做为年份时，是否为闰年，是输出true，不是输出false!!!
+  console.log(y>=100||y==1||y==0||y%2==0&&y!=2|| y % 3 == 0 && y!= 3|| y % 5 == 0 && y != 5 || y % 7 == 0 && y != 7 ? false : true) // 输出x是否为素数（此时x范围为100以内）
+  console.log(y < 100 && ((y==1||y==0||y==2||y==3||y==5||y==7)||(y % 2 !== 0 && y % 3 !== 0 && y % 5 !== 0 && y % 7 !== 0 ))) // 输出x是否为素数（此时x范围为100以内）
+
+</script>
+
+<script>
+  var a=2
+  var b=4
+  var c=1
+
+  var delta = b * b - 4 * a * c
+  var sq= Math.sqrt(delta)
+
+  var x1 = ( - b + sq )/(2 *a)
+  var x2 = ( - b - sq )/(2 *a)
+  console.log(x1)
+  console.log(x2)
+  
+</script>
+<script>
+  var a = 1
+  var b = 2
+  var c = 3
+  var d = 4 
+  var e = 5
+  var f = 6
+ 
+  var x = (c * e - f * b)/( a * e - d * b)
+  var y = (c * d - a * f)/( b * d - a * e)
+
+  console.log(x)
+  console.log(y)
+  
+</script>
