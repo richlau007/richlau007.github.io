@@ -194,8 +194,8 @@ else console.log("NO")
   if (n % 3== 0) res +="3 "  
   if (n % 5== 0) res +="5 "  
   if (n % 7== 0) res +="7 " 
-  if(res == "") res = "n "
-  else res.substr(0,res.length - 1)
+  if(res == "") res = "n"
+  else res.substr(0,(res.length - 2))
   console.log(res) 
 </script>
 <script id="ch0104/10" type="...">
@@ -247,8 +247,8 @@ console.log(all)
   var a = Number(prompt("a"))
   var b = Number(prompt("b"))
   var c = Number(prompt("c"))
-  if(a + b > c && a + c > b && b + c > a ) console.log("yes")
-  else console.log("no")
+  if(a + b > c && a + c > b && b + c > a ) console.log("YES")
+  else console.log("NO")
 </script>
 <script id="ch0104/17" type="...">
   var y = Number(prompt("y"))
@@ -302,7 +302,8 @@ console.log(s)
     var x12 =  Math.sqrt(-delta)/ 2 / a
     var x21 = -b / 2 / a
     var x22 = Math.sqrt(-delta) / 2 / a
-    console.log("x1="+x11.toFixed(5)+"+"+x12.toFixed(5)+"i"+ ";x2=" + x21.toFixed(5) + "-" + x22.toFixed(5) + "i")
+    console.log(x11.toFixed(5) + "+" +x12.toFixed(5) + "i")
+    console.log(x21.toFixed(5) + "-" +x22.toFixed(5) + "i")
   }
 
 </script>
