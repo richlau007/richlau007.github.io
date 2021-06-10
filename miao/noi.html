@@ -354,14 +354,11 @@ console.log(h)
 </script>
 <script id="ch0105/06" type="...">
   var n = Number(prompt("n"))
-  var min 
-  var max
+  var min = Infinity
+  var max = - Infinity
   var v 
   for(var i = 0;i < n;i ++){
     v = Number(prompt(i + 1))
-    if (i ==0 ) {
-      max = min = v
-    }
     if (v > max) max = v
     if (v < min) min = v 
   }
@@ -384,9 +381,9 @@ console.log(h)
 </script>
 <script id="ch0105/08" type="...">
   var n = Number(prompt("n"))
-  var tan = (n - 2) * 180
-  for (var i = 0;i < n -1;i ++) tan -= Number(prompt("tan"))
-  console.log(tan)
+  var angle = (n - 2) * 180
+  for (var i = 0;i < n -1;i ++) angle -= Number(prompt("angle"))
+  console.log(angle)
 </script>
 <script id="ch0105/09" type="...">
   var m = Number(prompt("m"))
@@ -545,7 +542,7 @@ console.log(Math.ceil(time))
   console.log((h /2).toFixed(7))
 </script>
 
-<script id="ch0105/21">
+<script id="ch0105/21" type="...">
   var N =Number(prompt("N"))
   for(N;N != 1;){
     if (N % 2 == 1) {
@@ -557,15 +554,163 @@ console.log(Math.ceil(time))
   console.log("End")
 
 </script>
-<script id="ch0105/2"></script>
-<script id="ch0105/2"></script>
-<script id="ch0105/2"></script>
-<script id="ch0105/2"></script>
-<script id="ch0105/2"></script>
-<script id="ch0105/2"></script>
-<script id="ch0105/2"></script>
-<script id="ch0105/2"></script>
-<script id="ch0105/30"></script>
+<script id="ch0105/22" type="...">
+ var child = 0
+ var mother = 0
+ var m
+ var c
+ for (var i = 0; i < 12 ; i ++){
+    var b = Number(prompt("b"))
+    child += 300
+   if (child < b) {
+     console.log(- i - 1)
+     break
+   }
+   child -=  b
+   if (child > 100) {
+     c = child % 100
+     mother += child - c
+     child = c
+   }
+
+   if(i == 11){
+     console.log(mother * 1.2 + child)
+   }
+ }
+</script>
+<script id="ch0105/23" type="...">
+  var m = Number(prompt("m"))
+  var n = Number(prompt("n"))
+  var num
+  var p = 0
+  for (var i = 0 ; i < n ; i ++){
+    num = Number(prompt("num"))
+    if( m > num){
+      m -= num
+    }else{
+      p++
+    }
+  }
+  console.log(p)
+</script>
+<script id="ch0105/24" type="...">
+  var n = Number(prompt("n"))
+  var max = 0
+  var m = 0
+  var l 
+  var h
+for (var i = 0 ; i < n ; i++){
+  h = Number(prompt("h"))
+  l = Number(prompt("l"))
+  if (h >= 90 && h <= 140 && l >= 60 && l <= 90) {
+    m ++
+    console.log(m)
+  }else{
+    m = 0
+  }
+  if (m > max) {
+    max = m
+  }
+}
+console.log(max)
+</script>
+<script id="ch0105/25" type="...">
+ var seven = 7 ** 3 - 1
+ var nigh = 9 ** 3 - 1
+ var s1,s2,s3,n1,n2,n3
+ for (var i = 81 ; i < seven  ; i ++){
+  //  console.log(i)
+   s1 = i % 7
+   s3 = Math.floor( i / 49 )  
+   s2 = ( i - 49 * s3 - s1 ) / 7 
+   n1 = i % 9
+   n3 = Math.floor( i / 81 )  
+   n2 = ( i - 81 * n3 - n1 ) / 9
+
+   if (s1 == n3 && s2 == n2 && s3 == n1) {
+     console.log(i)
+     console.log(seven,""+s1 + s2 + s3)
+     console.log(nigh,""+n1 + n2 + n3)
+     
+   }
+ }
+
+</script>
+<script id="ch0105/26" type="...">
+  var n = Number(prompt("n"))
+  var count = 0
+  for(var i = 0 ; i < n ; i ++){
+    var num = Number(prompt("num"))
+    var n4 = num % 10
+    var n3 = ( num % 100 - n4) / 10
+    var n2 = ( num % 1000 - n3 *10 - n4) / 100
+    var n1 = Math.floor( num / 1000)
+    if (n4 - n3 - n2 -n1 > 0) {
+      count++
+    }
+  }
+  console.log(count)
+</script>
+<script id="ch0105/27" type="...">
+  var K = Number(prompt("K"))
+  var Sn = 1
+  var n = 1
+  while(K >= Sn){
+    n++
+    Sn += 1 / n
+  }
+  console.log(n)
+</script>
+<script id="ch0105/28" type="...">
+  var n = Number(prompt())
+  var num = (n + "").length
+  for (var i = 0 ; i < num ; i ++){
+    console.log(n % 10)
+    n = Math.floor(n / 10)
+  }
+</script>
+<script id="ch0105/29" type="...">
+var num = Number(prompt())
+var num2 = num
+if (num < 0) {
+  num = - num
+}
+var str = String(num)
+var l = str.length
+var str2 = ""
+for (var i = l - 1 ; i >= 0 ; i --){
+  str2 += str.substr(i ,1)
+  // console.log(str2)
+}
+num = Number(str2)
+if (num2 < 0) {
+  num = -num
+}
+console.log(num)
+</script>
+<script id="ch0105/30">
+  var m = prompt("m")
+  // console.log(m)
+  var k = Number(prompt("k"))
+  var count = 0
+  // var thek = Number(k)
+  var thechar = ""
+  for (var i = 0 ; i < m.length ; i ++){ 
+    var str = m.substr(i, 1)
+    // console.log(str)
+    if (Number(str) == 3) {
+      count ++
+      // console.log(count)
+    }
+  }
+  if(count == k && Number(m) % 19 == 0 ){
+    console.log("YES")
+  }else{
+    console.log("NO")
+  }
+
+
+</script>
 
 <script id="ch0105/3"></script>
 <script id="ch0105/3"></script>
