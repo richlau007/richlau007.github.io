@@ -892,7 +892,7 @@ console.log(N)
     }
     console.log(count)
 </script>
-<script id="ch0105/42" type="...">
+<script id="ch0105/42" type="">
   var h = Number(prompt("h"))
   var l = Number(prompt("l"))
   var p = prompt("p")
@@ -913,13 +913,37 @@ console.log(N)
         }
       }
     }
-    console.log(str)
+    console.log(str + "\n")
   }
 </script>
-<script id="ch0105/43">
+<script id="ch0105/43" type="...">
   var n = Number(prompt("n"))
+  var big
+  var small 
+  var s1 
+  var s2
   for (var i = n - 1 ; i > 1 ; i--){
-    
+    if( n % i == 0 ){
+      // console.log(i)
+      big = i
+      small = n / i
+      s1 = 0
+      s2 = 0
+      for (var j = big - 1 ; j >1 ; j-- ){
+        if( big % j == 0){
+          s1 = 1
+        }
+      }
+      for (var k = small - 1 ; k >1 ; k-- ){
+        if( small % k == 0){
+          s2 = 1
+        }
+      }
+      if(s1 == 0 && s2 == 0){
+        console.log(i)
+        break
+      }
+    }
   }
 
 </script>
