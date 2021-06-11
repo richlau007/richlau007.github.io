@@ -812,12 +812,70 @@ console.log(sum.toFixed(4))
   }
   console.log(sum.toFixed(2))
 </script>
-<script id="ch0105/37">
-var 
+<script id="ch0105/37" type="...">
+var M = Number(prompt("M"))
+var N = Number(prompt("N"))
+var X = Number(prompt("X"))
+var M1 = M
+while(M1 == M){
+  M1 = 0
+  N += Math.floor(M / N)
+  X -= Math.ceil(M / N)
+  if( X >= 0){
+    M1 = M
+  }
+}
+console.log(N)
 </script>
-<script id="ch0105/3"></script>
-<script id="ch0105/3"></script>
-<script id="ch0105/40"></script>
+<script id="ch0105/38" type="...">
+  var num = Number(prompt("num"))
+  var n
+  var v
+  var str
+  for (var i = 0; i < num; i++) {
+    n = Number(prompt("n"))
+
+    for (var j = n; j >= 0; j--) {
+      v = Number(prompt("v"))
+      if (n == 0) {
+        str = "0"
+      } else {
+        if (j == n) {
+          str = "" + v * j 
+        } else if (j == 0){
+          
+        }else {
+          str += " " + v * j
+        }
+      }
+    }
+    console.log(str)
+  }
+</script>
+<script id="ch0105/39" type="...">
+  var n = Number(prompt("n"))
+  var sum = 0
+  for (var i = 1 ; i <= n ; i ++){
+    if (i % 7 != 0 && i % 10 != 7 && Math.floor(i / 10) != 7){
+      sum += i * i
+    }
+  }
+  console.log(sum)
+</script>
+<script id="ch0105/40" type="...">
+  var n = Number(prompt("n"))
+  var str
+  var count = 0
+  for (var i = 1 ;i <= n ; i ++){
+    str =String(i)
+    for(var j = 0 ;j < str.length ;j++ ){
+      if(str.substr(j,1) == "1"){
+        count++
+      }
+    }
+  }
+  console.log(count)
+</script>
 
 <script id="ch0105/4"></script>
 <script id="ch0105/4"></script>
