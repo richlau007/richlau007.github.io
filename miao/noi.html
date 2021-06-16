@@ -718,7 +718,7 @@ console.log(num)
   var v = 0
   var str
   for (var i = 1; i <= N; i++) {
-    for (var j = 1; j <= M; j++) {
+    for (var j = 1; j <= i; j++) {
       if (j == 1) {
         v = 0
       } else {
@@ -749,12 +749,12 @@ var n = Number(prompt("n"))
 var p1 = 1
 var q1 = 2
 var m
-var sum = q1 / p1
-for (var i = 1 ; i < n ;i ++ ){
+var sum 
+for (var i = 0 ; i < n ;i ++ ){
+  sum += q1 / p1
   m = q1 
   q1 = q1 + p1
   p1 = m
-  sum += q1 / p1
 }
 console.log(sum.toFixed(4))
 </script>
@@ -824,6 +824,9 @@ while(M1 == M){
   if( X >= 0){
     M1 = M
   }
+  // console.log("M1",M1)
+  // console.log("N",N)
+  // console.log("X",X)
 }
 console.log(N)
 </script>
@@ -892,7 +895,7 @@ console.log(N)
     }
     console.log(count)
 </script>
-<script id="ch0105/42" type="">
+<script id="ch0105/42" type="...">
   var h = Number(prompt("h"))
   var l = Number(prompt("l"))
   var p = prompt("p")
@@ -988,3 +991,260 @@ for (var i = 1 ;i <= n ; i++){
   }
 }
 </script>
+
+<script id="narcissistic" type="...">
+  var n = Number(prompt("n"))
+  console.log(isNarcissistic(n))
+  
+  function isNarcissistic(n){
+    if(sumEveryNum(n) === n){
+      return true
+    }else{
+      return false
+    }
+  }
+
+  function sumEveryNum(n){
+    var num = String(n).length
+    var sum = 0
+    var mod = 0
+    while(n){
+      mod = n % 10
+      sum += mod ** num
+      n = ( n - n % 10 ) / 10 
+    }
+    return sum
+  }
+  
+</script>
+<script id="narcissistics" type="...">
+  for(var i = 10 ; i <= 10000 ; i++){
+    if(isNarcissistic(i)){
+      console.log(i)
+    }
+  }
+  
+  function isNarcissistic(n){
+    if(sumEveryNum(n) === n){
+      return true
+    }else{
+      return false
+    }
+  }
+
+  function sumEveryNum(n){
+    var num = String(n).length
+    var sum = 0
+    var mod = 0
+    while(n){
+      mod = n % 10
+      sum += mod ** num
+      n = ( n - n % 10 ) / 10 
+    }
+    return sum
+  }
+  
+</script>
+<script id="palindrom" type="...">
+  var n = prompt("n")
+  console.log(isPalindrom(n))
+
+  // function isPalindrom(n){
+  //   let str = ""
+  //   let len = n.length
+  //   for(var i = 0 ; i < len  ; i++){
+  //     str = n[i] + str
+  //   }
+  //   if( n == str){
+  //     return true
+  //   }else{
+  //     return false
+  //   }
+  // }
+
+  function isPalindrom(n){
+    let old = n
+    let num
+    let newNum = 0
+    while(n){
+      num = n % 10
+      newNum = newNum * 10 + num
+      n = (n - num) / 10 
+    }
+    if(old == newNum){
+      return true
+    }else{
+      return false
+    }
+  }
+</script>
+
+<script id="weekday" type="...">
+  var y = Number(prompt("y"))
+  var m = Number(prompt("m"))
+  console.log(weekday(y,m))
+
+  function weekday (y,m){
+    var sum = 1
+    for(var i = 1 ; i < y ; i++ ){
+      sum += yearDay(i)
+    }
+    for(var j = 1 ; j < m ; j++){
+      sum += monthDay(y,j)
+    }
+    console.log(sum)
+    return sum % 7
+  }
+
+  function yearDay(y){
+    if(y % 400 == 0){
+      return 366
+    }else if (y % 4 == 0 && y % 100 != 0 ){
+      return 366
+    }else{
+      return 365
+    }
+  }
+
+  function monthDay(y,j){
+    if(j== 1 || j == 3 || j == 5 || j ==7 || j == 8 || j == 10 || j == 12 ){
+      return 31
+    }else if (j == 2){
+      if(yearDay(y) == 366){
+        return 29
+      }else{
+        return 28
+      }
+    }else{
+      return 30
+    }
+  }
+
+</script>
+
+<script id="complete-number" type="...">
+  var n = Number(prompt("n"))
+  console.log(isComNum(n))
+  function isComNum(n){
+    let sum = 0
+    for (var i = 1 ; i < n ; i++){
+      if(n % i == 0){
+        sum += i
+      }
+    }
+    if(sum == n) {
+      return true
+    }else{
+      return false
+    }
+  }
+</script>
+<script id="complete-numbers" type="...">
+  for(var i = 1 ; i < 1000 ; i++){
+    if(isComNum(i)){
+      console.log(i)
+    }
+  }
+
+  function isComNum(n){
+    let sum = 0
+    for (var i = 1 ; i < n ; i++){
+      if(n % i == 0){
+        sum += i
+      }
+    }
+    if(sum == n) {
+      return true
+    }else{
+      return false
+    }
+  }
+</script>
+<script id="prime" type="...">
+  var n = Number(prompt("n"))
+  console.log(isPrime(n))
+
+  function isPrime(n){
+    for(var i = 2 ; i < n ; i++){
+      if(n % i == 0){
+        return false
+      }
+    }
+    return true
+  }
+</script>
+<script id="primes" type="...">
+  for(var i = 2 ; i < 1000 ; i++){
+    if(isPrime(i)){
+      console.log(i)
+    }
+  }
+
+  function isPrime(n){
+    for(var i = 2 ; i < n ; i++){
+      if(n % i == 0){
+        return false
+      }
+    }
+    return true
+  }
+</script>
+<script id="lcf&lcm" type="...">
+  var a = Number(prompt("a"))
+  var b = Number(prompt("b"))
+  lcfLcm(a,b)
+  
+  function lcfLcm (a,b){
+    var min =theMin(a,b)
+    var lcf = 1
+    for(var i = 2 ; i <=min ; i++){
+      if(a % i == 0 && b % i == 0){
+        lcf = i
+      }
+    }
+    console.log(lcf)
+    console.log(a * b / lcf)
+  }
+
+  function theMin(a,b){
+    if (a < b){
+      return a
+    }else{
+      return b
+    }
+  }
+</script>
+<script id="sqrt">
+  var n = Number(prompt("n"))
+  console.log(sqrt(n,5))
+
+  function sqrt(n,m){
+    var mark = Math.floor(n)
+
+    var s
+    for(var i = 1 ; ;i++){
+      if(i * i > mark){
+        s = i - 1 
+        break
+      }
+    }
+    mark = n - s * s
+    if(mark == 0 || m == 0){
+      return s
+    }else {
+      return ""+ s + sqrt(mark *10 , m - 1)
+    }
+  }
+</script>
+<!-- 
+narcissistic: 输入一个数，判断是否是水仙花数
+narcissistics: 输出10000以内的水仙花数
+palindrom: 判断一个数是否是回文数字
+weekday: 输入年份与月份，输出这个月的第一天是周几
+complete-number: 判断一个数是否是完全数
+complete-numbers: 输出1000以内的完全数
+prime: 判断一个数是否是素数
+primes: 输出1000以内的素数
+lcf&lcm: 输入两个数，输出它们的最大公约数和最小公倍数
+sqrt: 求一个数的平方根 
+-->
