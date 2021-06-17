@@ -749,8 +749,8 @@ var n = Number(prompt("n"))
 var p1 = 1
 var q1 = 2
 var m
-var sum 
-for (var i = 0 ; i < n ;i ++ ){
+var sum = 0
+for (var i = 0 ; i < n ;i++ ){
   sum += q1 / p1
   m = q1 
   q1 = q1 + p1
@@ -1092,7 +1092,7 @@ for (var i = 1 ;i <= n ; i++){
     for(var j = 1 ; j < m ; j++){
       sum += monthDay(y,j)
     }
-    console.log(sum)
+    // console.log(sum)
     return sum % 7
   }
 
@@ -1140,17 +1140,17 @@ for (var i = 1 ;i <= n ; i++){
   }
 </script>
 <script id="complete-numbers" type="...">
-  for(var i = 1 ; i < 1000 ; i++){
+  for(var i = 2 ; i < 1000 ; i++){
     if(isComNum(i)){
       console.log(i)
     }
   }
 
   function isComNum(n){
-    let sum = 0
-    for (var i = 1 ; i < n ; i++){
+    let sum = 1
+    for (var i = 2 ; i < Math.sqrt(n); i++){
       if(n % i == 0){
-        sum += i
+        sum += i + n / i
       }
     }
     if(sum == n) {
@@ -1165,6 +1165,7 @@ for (var i = 1 ;i <= n ; i++){
   console.log(isPrime(n))
 
   function isPrime(n){
+    if( n < 2) return false
     for(var i = 2 ; i < n ; i++){
       if(n % i == 0){
         return false
@@ -1202,8 +1203,8 @@ for (var i = 1 ;i <= n ; i++){
         lcf = i
       }
     }
-    console.log(lcf)
     console.log(a * b / lcf)
+    console.log(lcf)
   }
 
   function theMin(a,b){
@@ -1214,25 +1215,25 @@ for (var i = 1 ;i <= n ; i++){
     }
   }
 </script>
-<script id="sqrt">
+<script id="sqrt" type="...">
   var n = Number(prompt("n"))
-  console.log(sqrt(n,5))
+  var N = n
+  console.log(sqrt(n))
 
-  function sqrt(n,m){
-    var mark = Math.floor(n)
-
-    var s
-    for(var i = 1 ; ;i++){
-      if(i * i > mark){
-        s = i - 1 
-        break
-      }
+  function sqrt(n,m = 0,k = 15){
+    var h = (n + m) / 2
+    console.log(h)
+    if(h * h > N){
+      n = h
+    }else if(h * h < N){
+      m = h
+    }else{
+      return h
     }
-    mark = n - s * s
-    if(mark == 0 || m == 0){
-      return s
+    if (k == 0){
+      return h
     }else {
-      return ""+ s + sqrt(mark *10 , m - 1)
+      return sqrt(n,m,k-1)
     }
   }
 </script>
