@@ -1237,6 +1237,29 @@ for (var i = 1 ;i <= n ; i++){
     }
   }
 </script>
+<script>
+  // 202 happy number
+  var isHappy = function (n) {
+      var sum = 0
+      var tar = n
+      var num
+      var a = 1
+      while (tar != 1) {
+        num = n % 10
+        sum += num * num
+        console.log(sum)
+        n = (n - num) / 10
+        if (n == 0) {
+          a *= sum
+          tar = sum
+          n = sum
+          sum = 0
+        }
+      }
+      return true
+    };
+    
+</script>
 <!-- 
 narcissistic: 输入一个数，判断是否是水仙花数
 narcissistics: 输出10000以内的水仙花数
