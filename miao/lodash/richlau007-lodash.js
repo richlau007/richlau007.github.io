@@ -28,7 +28,7 @@ var richlau007 = function () {
         s = size
       }
     }
-    if (arg != []) result.push(arg)
+    if (arg.length) result.push(arg)
     return result
   }
 
@@ -69,14 +69,103 @@ var richlau007 = function () {
     return result
   }
 
-  function join() {
-    
+
+  function uniqueBy(array,f) {
+    let result = []
+    let obj = {}
+    for (var i = 0; i < array.length; i++) {
+      let item
+      if (typeof(array[i])=== "object") {
+        item = array[i][f]
+      } else {
+        item = f(array[i])
+      }
+      if (item in obj) continue
+      else {
+        obj[item] = true
+        result.push(array[i])
+      }
+    }
+    return result
   }
+
+  function flattenDeep(array) {
+    var result = []
+    for (var i = 0; i < array.length; i++){
+      if (Array.isArray(array[i])) {
+        //result.concat必须对result进行赋值
+          result = result.concat(flattenDeep(array[i]))
+      } else {
+        result.push(array[i])
+      }
+    }
+    return result
+  }
+
+  function flattenDepth(array, depth = 1) {
+    if(depth == 0 ) return array
+    let result = []
+    for (let i = 0; i < array.length; i++) {
+      if (Array.isArray(array[i])) {
+        //result.concat必须对result进行赋值
+        result = result.concat(flattenDepth(array[i],depth - 1))
+      } else {
+        result.push(array[i])
+      }
+    }
+    return result
+  }
+  function groupBy(collection, iteratee) {
+    let obj = {}
+    for (var i = 0; i < collection.length; i++){
+      let item = collection[i]
+      let group
+      if (typeof (iteratee) === "function") {
+        //为什么 String（）没有生效？
+        group = String(iteratee(item))
+      } else {
+        group = String(item[iteratee])
+      }
+      if (!(group in obj)) {
+        obj[group] = []
+      } 
+      obj[group].push(item)
+    }
+    return obj
+  }
+
+  function keyBy(collection, iteratee) {
+    let obj = {}
+    for (var i = 0; i < collection.length; i++){
+      let item = collection[i]
+      let key
+      if (typeof (iteratee) === "function") {
+        //为什么 String（）没有生效？
+        key = String(iteratee(item))
+      } else {
+        key = String(item[iteratee])
+      }
+
+      obj[key] = (item)
+    }
+    return obj
+  }
+
+  function forEach(array)
+  
+
+
+
 
 
   return {
     chunk,
     compact,
     uniq,
+    uniqueBy,
+    flattenDeep,
+    flattenDepth,
+    groupBy,
+    keyBy
   }
 }()
