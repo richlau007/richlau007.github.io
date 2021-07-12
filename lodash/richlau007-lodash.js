@@ -3,8 +3,8 @@ var richlau007 = function () {
     
   }
 
-  
+
   return {
-    chunk : chunk,
+    chunk : chunk
   }
-}
+}()
