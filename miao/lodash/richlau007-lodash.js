@@ -70,7 +70,7 @@ var richlau007 = function () {
   }
 
 
-  function uniqueBy(array,f) {
+  function uniqBy(array,f) {
     let result = []
     let obj = {}
     for (var i = 0; i < array.length; i++) {
@@ -151,6 +151,56 @@ var richlau007 = function () {
     return obj
   }
 
+  function forEach(collection, action) {
+      for (let item in collection) {
+        action(collection[item],item)
+      }
+  }
+
+  function drop(array, n = 1) {
+    while (n--) {
+      array.shift()
+    }
+    return array
+  }
+
+  function dropRight(array, n = 1) {
+    while (n--) {
+      array.pop()
+    }
+    return array
+  }
+
+  function difference(array, value = []) {
+    let result = []
+    for (var i = 0; i < array.length; i++){
+      for (var j = 0; j < value.length; j++){
+        if(array[i] == value[j]) break
+        if(j == value.length - 1) result.push(array[i])
+      }
+    }
+    return result
+  }
+
+  function differenceBy(array, value = [],iteratee) {
+    let result = []
+    if (typeof (iteratee) == "function") {
+      for (var i = 0; i < array.length; i++) {
+        for (var j = 0; j < value.length; j++) {
+          if (iteratee(array[i]) == iteratee(value[j])) break
+          if (j == value.length - 1) result.push(array[i])
+        }
+      }
+    } else {
+      for (var i = 0; i < array.length; i++) {
+        for (var j = 0; j < value.length; j++) {
+          if (array[i][iteratee] == value[j][iteratee]) break
+          if (j == value.length - 1) result.push(array[i])
+        }
+      }
+    }
+    return result
+  }
 
 
 
@@ -163,10 +213,15 @@ var richlau007 = function () {
     chunk,
     compact,
     uniq,
-    uniqueBy,
+    uniqBy,
     flattenDeep,
     flattenDepth,
     groupBy,
-    keyBy
+    keyBy,
+    forEach,
+    drop,
+    dropRight,
+    difference,
+    differenceBy
   }
 }()
