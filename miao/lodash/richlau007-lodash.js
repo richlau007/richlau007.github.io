@@ -151,7 +151,10 @@ var richlau007 = function () {
     return obj
   }
 
-  function forEach(array){}
+
+
+
+
   
 
 
