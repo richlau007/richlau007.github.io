@@ -203,6 +203,141 @@ var richlau007 = function () {
   }
 
 
+//---------------------------------------------------------
+  // map
+  //支持数组 和 对象
+
+
+  //传入属性名，它返回的函数就用来获取对象的属性名
+  function property(prop) {
+    return function (obj) {
+      return obj[prop]
+    }
+  }
+
+  function get(object, path ,defaultVal = undefined) {
+    for (var i = 0; i < path.length; i++){
+      if (object == undefined) {
+        return defaultVal
+      } else {
+        object = object[path[i]]
+      }
+    }
+    return object
+  }
+
+  //get 递归写法
+  function get2(object, path, defaultval = undefined) {
+    path = toPath(path)
+    if (object == undefined) {
+      return defaultval
+    } else if (path.length == 0) {
+      return object
+    } else {
+      return get2(object[path[0]],path.slice(1))
+    }
+  }
+
+  function toPath(val) {
+    if (Array.isArray(val)){
+      return val
+    } else {
+      return val.split('][')
+      .reduce((ary, it) => ary.concat(it.split('].')), [])
+      .reduce((ary, it) => ary.concat(it.split('[')), [])
+      .reduce((ary, it) => ary.concat(it.split('.')), [])
+    }
+  }
+
+
+  //对象obj的属性是否和  条件对象source  一致
+  //浅层比较，一层
+  function matches(source) {
+    return function (obj) {
+      for (var key in source) {
+        if (obj[key] !== source[key]) {
+          return false
+        }
+      }
+      return true
+    }
+  }
+
+
+//传入的是数组(用数组表示对象的 属性与值，自由一对)
+  function matchesProperty(path,srcValue) {
+    return function (obj) {
+      return obj[ary[path]] == ary[srcValue]
+    }
+  }
+
+  // 判断传入参数类型的，兼容function，object、array、string
+  function iteratee(maybePredicate) {
+    if (typeof maybePredicate == 'function') {
+      return maybePredicate
+    }
+    if (typeof maybePredicate == 'string') {
+      return property(maybePredicate)
+    }
+    if (Array.isArray(maybePredicate)) {
+      return matchesProperty(...maybePredicate)
+    }
+    if (typeof maybePredicate == 'object') {
+      return matches(maybePredicate)
+    }
+  }
+
+
+  //map 的实现，兼容mapper  是函数和字符串
+  function map(collection, mapper) {
+    mapper = iteratee(mapper)
+    var result = []
+    for (var key in collection) {
+      result.push(mapper(collection[key],key,collection))
+    }
+    return result
+  }
+  
+
+  //filter,兼容predicate  函数、对象、数组、字符串
+  function filter(collection, predicate) {
+    predicate = iteratee(predicate)
+    var result = []
+    for (var key in collection) {
+      if (predicate(collection[key], key, collection) === true) {
+        result.push(collection[key])
+      }
+    }
+    return result
+  }
+
+
+
+
+
+
+  //bind
+  //占位绑定
+  function bind(f, thisArg, ...fixedArgs) {
+    return function (...args) {
+      
+    }
+  }
+
+  //isMatch
+
+  function isMatch(object, source) {
+    
+  }
+
+
+  //sunBy
+
+  function sumBy(ary, predicate) {
+    
+  }
+
+
 
 
 
@@ -222,6 +357,16 @@ var richlau007 = function () {
     drop,
     dropRight,
     difference,
-    differenceBy
+    differenceBy,
+
+
+    matches,
+    matchesProperty,
+    property,
+    map,
+    filter,
+    get,
+    get2,
+    toPath
   }
 }()
