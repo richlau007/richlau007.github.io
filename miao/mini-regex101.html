@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #regInput,#strInput{
+      width: 300px;
+    }
+    label,label input{
+      font-family: monospace;
+      cursor: pointer;
+    }
+    #error{
+      color: red;
+      font-size: small;
+    }
+
+    #strInput,#result{
+      width: 300px;
+      height: 500px;
+      color: black;
+      margin: 0;
+      border: 1px solid gray;
+      padding: 0;
+      overflow: scroll;
+      font-size: 16px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      display: block;
+      box-sizing: border-box;
+      /* text-indent: ; */
+      word-spacing: normal;
+      word-break: break-all;
+    }
+
+    #strInput{
+      margin-top: -500px;
+      /* margin-left: -1px; */
+      background-color: transparent;
+      resize: none;
+      
+    }
+
+    #result{
+      color: transparent;
+      
+    }
+    #result em{
+      background-color: turquoise;
+      font-style: normal;
+    }
+
+  </style>
+</head>
+<body>
+  <div>
+    <div>请输入正则表达式：</div>
+    <label >
+      <input type="checkbox" onclick="run()" checked id="global">g
+    </label>
+    <label >
+      <input type="checkbox" onclick="run()" id="ignoreCase">i
+    </label>
+    <label >
+      <input type="checkbox" onclick="run()" id="multiline">m
+    </label>
+    <div id="error"></div>
+    <input type="text" id="regInput" onkeyup="run()" value="foo">
+    <div>请输入内容：</div>
+    <div >
+      <pre id="result"></pre>
+          <textarea name="" id="strInput" cols="30" rows="10" onkeyup="run()" spellcheck="false">
+foooejkwhfsdjkh fooujfods fooe
+dsajhkfoo
+fffffoooofffoo fofoofofofoo
+slkajfl hjkl 543
+56789 6789FOO
+kdljfkljd
+dkfjFoo
+slkdajlkaj foolasjlkjl
+          
+            </textarea>
+    </div>
+
+    
+  </div>
+  <script>
+    //运行页面，直接运行一次
+    run()
+    function run(){
+      // 不需要转译
+      var regSource = regInput.value
+      if(regSource =="") {
+        result.innerHTML =""
+        return
+      }
+      try {
+        var re = new RegExp(regSource, getFlags())
+      } catch (e) {
+        console.log(e)
+      }
+      var str = strInput.value
+      // console.log(re)
+      // console.log(str)
+      // result.innerHTML = str
+      var match
+      var resultHTML = ""
+      var l = re.lastIndex
+      // debugger
+      while(match = re.exec(str)){
+        resultHTML += str.slice(l,match.index)
+        resultHTML += "<em>" +match[0] +"</em>"
+        l = re.lastIndex
+        // console.log(resultHTML)
+        if(!re.global) break
+      }
+      resultHTML += str.slice(l)
+
+      // console.log(str)
+      result.innerHTML = resultHTML
+    }
+
+
+
+
+
+    function getFlags(){
+      var flags = ""
+      if(global.checked) flags += "g"
+      if(ignoreCase.checked) flags += "i"
+      if(multiline.checked) flags += "m"
+      return flags
+
+    }
+
+    strInput.onscroll = function (){
+      result.scrollTop = this.scrollTop
+    }
+  </script>
+</body>
+</html>
