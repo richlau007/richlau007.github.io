@@ -171,35 +171,55 @@ var richlau007 = function () {
     return array
   }
 
-  function difference(array, value = []) {
+  function difference(array, ...value) {
+    return differenceBy(array,...value)
+  }
+
+  function differenceBy(array, ...value) {
+    
+    if (Array.isArray(value[value.length - 1])) {
+      var iter = identity
+    } else {
+      var iter = iteratee(value.pop())
+    }
+    var v = []
+    for (var ary of value) {
+      v = v.concat(ary)
+    }
     let result = []
-    for (var i = 0; i < array.length; i++){
-      for (var j = 0; j < value.length; j++){
-        if(array[i] == value[j]) break
-        if(j == value.length - 1) result.push(array[i])
+    for (var i = 0; i < array.length; i++) {
+      for (var j = 0; j < v.length; j++) {
+        if (iter(array[i]) == iter(v[j])) break
+        if (j == v.length - 1) result.push(array[i])
       }
     }
     return result
   }
 
-  function differenceBy(array, value = [],iteratee) {
-    let result = []
-    if (typeof (iteratee) == "function") {
-      for (var i = 0; i < array.length; i++) {
-        for (var j = 0; j < value.length; j++) {
-          if (iteratee(array[i]) == iteratee(value[j])) break
-          if (j == value.length - 1) result.push(array[i])
-        }
-      }
+  function differenceWith(array,...value) {
+    if (Array.isArray(value[value.length - 1])) {
+      var iter = identity
     } else {
-      for (var i = 0; i < array.length; i++) {
-        for (var j = 0; j < value.length; j++) {
-          if (array[i][iteratee] == value[j][iteratee]) break
-          if (j == value.length - 1) result.push(array[i])
-        }
+      var iter = iteratee(value.pop())
+    }
+    var v = []
+    for (var ary of value) {
+      v = v.concat(ary)
+    }
+    let result = []
+    for (var i = 0; i < array.length; i++) {
+      for (var j = 0; j < v.length; j++) {
+        if (iter(array[i],v[j])) break
+        if (j == v.length - 1) result.push(array[i])
       }
     }
     return result
+  }
+
+
+
+  function identity(value){
+    return value
   }
 
 
@@ -209,13 +229,16 @@ var richlau007 = function () {
 
 
   //传入属性名，它返回的函数就用来获取对象的属性名
+  //
   function property(prop) {
     return function (obj) {
       return obj[prop]
     }
   }
 
-  function get(object, path ,defaultVal = undefined) {
+
+//默认了path 是数组（不符合真实情况）
+  function get2(object, path ,defaultVal = undefined) {
     for (var i = 0; i < path.length; i++){
       if (object == undefined) {
         return defaultVal
@@ -227,17 +250,19 @@ var richlau007 = function () {
   }
 
   //get 递归写法
-  function get2(object, path, defaultval = undefined) {
+  function get(object, path, defaultval = undefined) {
     path = toPath(path)
     if (object == undefined) {
       return defaultval
     } else if (path.length == 0) {
       return object
     } else {
-      return get2(object[path[0]],path.slice(1))
+      return get(object[path[0]],path.slice(1))
     }
   }
 
+
+//toPath 将属性路径转化为数组，返回给get使用
   function toPath(val) {
     if (Array.isArray(val)){
       return val
@@ -267,7 +292,7 @@ var richlau007 = function () {
 //传入的是数组(用数组表示对象的 属性与值，自由一对)
   function matchesProperty(path,srcValue) {
     return function (obj) {
-      return obj[ary[path]] == ary[srcValue]
+      return obj[path] == srcValue
     }
   }
 
@@ -344,6 +369,90 @@ var richlau007 = function () {
 
 
 
+  function parseJSON(str) {
+    var i = 0
+    return parseValue()
+    function parseValue() {
+      if (str[i] == '[') {
+        return parseArray()
+      }
+      if (str[i] == '{') {
+        return parseObject()
+      }
+      if (str[i] == '"') {
+        return parseString()
+      }
+      if (str[i] == 't') {
+        return parseTrue()
+      }
+      if (str[i] == 'f') {
+        return parseFalse()
+      }
+      if (str[i] == 'n') {
+        return parseNull()
+      }
+      return parseNumber()
+
+    }
+
+    function parseTrue() {
+      i += 4
+      return true
+    }
+    function parseFalse() {
+      i += 5
+      return false
+    }
+    function parseNull() {
+      i += 4
+      return null
+    }
+
+    function parseString() {
+      var star = ++i
+      while (str[i] !== '"') {
+        i++
+      }
+      return str.slice(star, i++)
+    }
+    function parseNumber() {
+      var star = i
+      while (str[i] >= '0' && str[i] <= '9') {
+        i++
+      }
+      return Number(str.slice(star, i))
+    }
+
+    function parseArray() {
+      var result = []
+      i++
+      while (str[i] !== ']') {
+        result.push(parseValue())
+        if (str[i] == ',') {
+          i++
+        }
+      }
+      i++
+      return result
+    }
+
+    function parseObject() {
+      var result = {}
+      i++
+      while (str[i] !== '}') {
+        var key = parseValue()
+        i++
+        var val = parseValue()
+        result[key] = val
+        if (str[i] == ',') {
+          i++
+        }
+      }
+      i++
+      return result
+    }
+  }
+
   return {
     chunk,
     compact,
@@ -367,6 +476,10 @@ var richlau007 = function () {
     filter,
     get,
     get2,
-    toPath
+    toPath,
+    parseJSON,
+    identity,
+    
+
   }
 }()
