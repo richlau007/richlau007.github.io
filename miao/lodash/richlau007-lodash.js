@@ -232,13 +232,16 @@ var richlau007 = function () {
   //
   function property(prop) {
     return function (obj) {
-      return obj[prop]
+      // return obj[prop]
+      return get(obj,prop)
     }
+    // return bind(get,null,'__',prop)
   }
 
 
 //默认了path 是数组（不符合真实情况）
-  function get2(object, path ,defaultVal = undefined) {
+  function get2(object, path, defaultVal = undefined) {
+    path = toPath(path)
     for (var i = 0; i < path.length; i++){
       if (object == undefined) {
         return defaultVal
@@ -275,17 +278,47 @@ var richlau007 = function () {
   }
 
 
+  //isMatch
+  //深层次比较两个对象 ,
+ 
+  function isMatch(object, source) {
+    // 原始类型比较
+    if (object === source) {
+      return true
+    }
+     //考虑原始类型
+    if (typeof source != 'object' || typeof object != 'object') {
+      return false
+    }
+    for (var key in source) {
+      //bug   如果source[key] = 0，事实上是存在的，但是值为0，判断为假，故进入else
+      if (source[key] && typeof source[key] != 'object') {
+        if (object[key] !== source[key]) {
+          return false
+        }
+      } else {
+        if (!isMatch(object[key], source[key])) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   //对象obj的属性是否和  条件对象source  一致
   //浅层比较，一层
   function matches(source) {
     return function (obj) {
-      for (var key in source) {
-        if (obj[key] !== source[key]) {
-          return false
-        }
-      }
-      return true
+      // for (var key in source) {
+      //   if (obj[key] !== source[key]) {
+      //     return false
+      //   }
+      // }
+      // return true
+      return isMatch(obj,source)
     }
+
+    // return bind(isMatch,null,'__',source)
   }
 
 
@@ -293,6 +326,7 @@ var richlau007 = function () {
   function matchesProperty(path,srcValue) {
     return function (obj) {
       return obj[path] == srcValue
+      //return isEqual(get(obj,path),srcValue)
     }
   }
 
@@ -311,6 +345,20 @@ var richlau007 = function () {
       return matches(maybePredicate)
     }
   }
+
+
+
+// 输入：map([{&quot;a&quot;:{&quot;b&quot;:1}},{&quot;a&quot;:{&quot;b&quot;:2}}],&quot;a.b&quot;)
+// 输出：[undefined,undefined]
+// 期望：[1,2]
+// =================
+// 输入：map([1,2,3],function(v,i,o) {return v+i+o.length*2})
+// 输出：[&quot;106&quot;,&quot;216&quot;,&quot;326&quot;]
+// 期望：[7,9,11]
+// =================
+// 输入：map([1,2,3,4,5],function(v,i,o) {return (v+i)%2==0})
+// 输出：[true,false,true,false,true]
+// 期望：[false,false,false,false,false]
 
 
   //map 的实现，兼容mapper  是函数和字符串
@@ -346,14 +394,17 @@ var richlau007 = function () {
   function bind(f, thisArg, ...fixedArgs) {
     return function (...args) {
       
+
+
+      // return f.apply(thisArg,arg)
     }
   }
 
-  //isMatch
+  // 双下划线__
+  bind.placeholder = '__'
 
-  function isMatch(object, source) {
-    
-  }
+
+ 
 
 
   //sunBy
@@ -369,7 +420,7 @@ var richlau007 = function () {
 
 
 
-  function parseJSON(str) {
+  function parseJson(str) {
     var i = 0
     return parseValue()
     function parseValue() {
@@ -467,8 +518,9 @@ var richlau007 = function () {
     dropRight,
     difference,
     differenceBy,
+    differenceWith,
 
-
+    isMatch,
     matches,
     matchesProperty,
     property,
@@ -477,7 +529,7 @@ var richlau007 = function () {
     get,
     get2,
     toPath,
-    parseJSON,
+    parseJson,
     identity,
     
 
