@@ -15,46 +15,95 @@
     
 var richlau007 = function () {
 
-  //数组分组
-  function chunk(array, size = 1) {
-    let result = []
-    let arg = []
-    let s = size
-    for (let i = 0; i < array.length; i++){
-      arg.push(array[i])
-      if (--s == 0) {
-        result.push(arg)
-        arg = []
-        s = size
+
+
+
+
+  function parseJson(str) {
+    var i = 0
+    return parseValue()
+    function parseValue() {
+      if (str[i] == '[') {
+        return parseArray()
       }
+      if (str[i] == '{') {
+        return parseObject()
+      }
+      if (str[i] == '"') {
+        return parseString()
+      }
+      if (str[i] == 't') {
+        return parseTrue()
+      }
+      if (str[i] == 'f') {
+        return parseFalse()
+      }
+      if (str[i] == 'n') {
+        return parseNull()
+      }
+      return parseNumber()
+
     }
-    if (arg.length) result.push(arg)
-    return result
-  }
 
+    function parseTrue() {
+      i += 4
+      return true
+    }
+    function parseFalse() {
+      i += 5
+      return false
+    }
+    function parseNull() {
+      i += 4
+      return null
+    }
 
-  // 压缩数组
-  function compact(array) {
-    let result = []
-    for (let i = 0; i < array.length; i++){
-      if (isNaN(array[i])) continue
-      else {
-        switch (array[i]) {
-          case false:
-          case null:
-          case 0:
-          case "":
-          case undefined:
-            continue;
-            break;
-          default:
-            result.push(array[i])
-            break;
+    function parseString() {
+      var star = ++i
+      while (str[i] !== '"') {
+        i++
+      }
+      return str.slice(star, i++)
+    }
+    function parseNumber() {
+      var star = i
+      while (str[i] >= '0' && str[i] <= '9') {
+        i++
+      }
+      return Number(str.slice(star, i))
+    }
+
+    function parseArray() {
+      var result = []
+      i++
+      while (str[i] !== ']') {
+        result.push(parseValue())
+        if (str[i] == ',') {
+          i++
         }
       }
+      i++
+      return result
     }
-    return result
+
+    function parseObject() {
+      var result = {}
+      i++
+      while (str[i] !== '}') {
+        var key = parseValue()
+        i++
+        var val = parseValue()
+        result[key] = val
+        if (str[i] == ',') {
+          i++
+        }
+      }
+      i++
+      return result
+    }
   }
+
+ 
 
   function uniq(array) {
     let result = []
@@ -87,6 +136,10 @@ var richlau007 = function () {
       }
     }
     return result
+  }
+
+  function uniqWith() {
+    
   }
 
   function flattenDeep(array) {
@@ -151,70 +204,11 @@ var richlau007 = function () {
     return obj
   }
 
-  function forEach(collection, action) {
-      for (let item in collection) {
-        action(collection[item],item)
-      }
-  }
+//-----------------------分界线以上需要重写08.10-----------------------------
 
-  function drop(array, n = 1) {
-    while (n--) {
-      array.shift()
-    }
-    return array
-  }
 
-  function dropRight(array, n = 1) {
-    while (n--) {
-      array.pop()
-    }
-    return array
-  }
 
-  function difference(array, ...value) {
-    return differenceBy(array,...value)
-  }
-
-  function differenceBy(array, ...value) {
-    
-    if (Array.isArray(value[value.length - 1])) {
-      var iter = identity
-    } else {
-      var iter = iteratee(value.pop())
-    }
-    var v = []
-    for (var ary of value) {
-      v = v.concat(ary)
-    }
-    let result = []
-    for (var i = 0; i < array.length; i++) {
-      for (var j = 0; j < v.length; j++) {
-        if (iter(array[i]) == iter(v[j])) break
-        if (j == v.length - 1) result.push(array[i])
-      }
-    }
-    return result
-  }
-
-  function differenceWith(array,...value) {
-    if (Array.isArray(value[value.length - 1])) {
-      var iter = identity
-    } else {
-      var iter = iteratee(value.pop())
-    }
-    var v = []
-    for (var ary of value) {
-      v = v.concat(ary)
-    }
-    let result = []
-    for (var i = 0; i < array.length; i++) {
-      for (var j = 0; j < v.length; j++) {
-        if (iter(array[i],v[j])) break
-        if (j == v.length - 1) result.push(array[i])
-      }
-    }
-    return result
-  }
+  
 
 
 
@@ -260,7 +254,8 @@ var richlau007 = function () {
     } else if (path.length == 0) {
       return object
     } else {
-      return get(object[path[0]],path.slice(1))
+      //递归需要把参数
+      return get(object[path[0]],path.slice(1),defaultval)
     }
   }
 
@@ -384,6 +379,12 @@ var richlau007 = function () {
     return result
   }
 
+  function forEach(collection, action) {
+    for (let item in collection) {
+      action(collection[item], item)
+    }
+  }
+
 
 
 
@@ -391,12 +392,30 @@ var richlau007 = function () {
 
   //bind
   //占位绑定
-  function bind(f, thisArg, ...fixedArgs) {
+  function bind (f, thisArg, ...fixedArgs) {
     return function (...args) {
+      fixedArgs = fixedArgs.slice()
+      args = args.slice()
+      for (var i = 0; i < fixedArgs.length; i++){
+        if (fixedArgs[i] == bind.placeholder) {
+          if (args.length) {
+            fixedArgs[i] = args.shift()
+          } else {
+            fixedArgs[i] = undefined
+          }
+        }
+      }
+      // console.log(fixedArgs,args)
+      if (args.length) {
+        // console.log(args)
+        fixedArgs = fixedArgs.concat(args)
+        // for (var j = 0; j < args.length; j++){
+        //   fixedArgs.push(args[j])
+        // }
+      }
       
-
-
-      // return f.apply(thisArg,arg)
+      console.log(fixedArgs)
+      return f.apply(thisArg,fixedArgs)
     }
   }
 
@@ -407,106 +426,288 @@ var richlau007 = function () {
  
 
 
-  //sunBy
+  //--------------------------sunBy/sum求和-----------------------
 
-  function sumBy(ary, predicate) {
+  function sumBy(ary, predicate = identity) {
+    predicate = iteratee(predicate)
+    var s = 0
+    for (let i = 0; i < ary.length; i++){
+      s += predicate(ary[i],i,ary)
+    }
+    return s
+  }
+  function sum(ary) {
+    return sumBy(ary)
+  }
+
+
+
+  function intersectionBy(...arrays) {
+    if (Array.isArray(arrays[arrays.length - 1])) {
+      var iter = identity
+    } else {
+      var iter = iteratee(arrays.pop())
+    }
+    var array = arrays.shift()
+    var v = []
+    for (var ary of arrays) {
+      v = v.concat(ary)
+    }
+    let result = []
+    for (var i = 0; i < array.length; i++) {
+      for (var j = 0; j < v.length; j++) {
+        if (iter(array[i]) == iter(v[j])) {
+          result.push(array[i])
+          break
+        }
+      }
+    }
+    return result
+  }
+
+
+
+
+//-------------------------sort相关------------------------------
+  //二分查找，返回value插入位置，最小值
+  function sortedIndexBy(array, value, predicate = identity,l = 0 ,r = array.length - 1) {
+    predicate = iteratee(predicate)
+
+    if (l >= r) {
+      if (predicate(array[l]) >= predicate(value)) return l
+      else return l + 1
+    }
+    var minIdx = (l + r ) / 2 | 0
+    if (predicate(array[minIdx]) < predicate(value)) {
+      return sortedIndexBy (array,value,predicate,minIdx + 1,r)
+    } else {
+      return sortedIndexBy(array, value, predicate, l, minIdx - 1)
+    }
+  }
+
+  function sortedIndex(array, value) {
+    return sortedIndexBy(array, value)
+  }
+
+  //解决对象排序的问题
+  //解决多重排序的问题
+  //第二个参数是一个数组
+  function sortBy(array, predicate = [identity]) {
+    var iter = iteratee(predicate.pop())
+    for (var i = 1; i < array.length; i++) {
+      var tmp = array[i]
+      for (var j = i - 1; j >= 0; j--) {
+        if (iter(array[j]) > iter(tmp)) array[j + 1] = array[j]
+        else {
+          break
+        }
+      }
+
+      array[j + 1] = tmp
+      // console.log(array)
+    }
+    if (predicate.length) {
+      sortBy(array, predicate)
+    }
+    return array
+  }
+
+
+  //------------------------some/every---------------------------
+  function some(collection, predicate = identity) {
+    predicate = iteratee(predicate)
+    for (var key in collection) {
+      if (predicate(collection[key])) {
+        return true
+      }
+    }
+    return false
+  }
+  function every(collection, predicate = identity) {
+    predicate = iteratee(predicate)
+    for (var key in collection) {
+      if (!predicate(collection[key])) {
+        return false
+      }
+    }
+    return true
+  }
+  
+
+//------------------------------Array-----------------
+
+  //数组按size分组成二维数组
+  function chunk(array, size = 1) {
+    let result = []
+    let arg = []
+    let s = size
+    for (let i = 0; i < array.length; i++) {
+      arg.push(array[i])
+      if (--s == 0) {
+        result.push(arg)
+        arg = []
+        s = size
+      }
+    }
+    if (arg.length) result.push(arg)
+    return result
+  }
+
+
+  // 压缩数组，将false, null, 0, "", undefined, and NaN等数组元素删除
+  function compact(array) {
+    let result = []
+    for (let i = 0; i < array.length; i++) {
+      if (isNaN(array[i])) continue
+      else {
+        switch (array[i]) {
+          case false:
+          case null:
+          case 0:
+          case "":
+          case undefined:
+            continue;
+            break;
+          default:
+            result.push(array[i])
+            break;
+        }
+      }
+    }
+    return result
+  }
+
+  function concat(array, ...value) {
+    for (var i = 0; i < value.length; i++){
+      if (Array.isArray(value[i])) {
+        for (var j = 0; j < value[i].length; j++){
+          array.push(value[i][j])
+        }
+      } else {
+        array.push(value[i])
+      }
+    }
+    return array
+  }
+  
+  function difference(array, ...value) {
+    return differenceBy(array, ...value)
+  }
+
+  function differenceBy(array, ...value) {
+
+    if (Array.isArray(value[value.length - 1])) {
+      var iter = identity
+    } else {
+      var iter = iteratee(value.pop())
+    }
+    var v = []
+    for (var ary of value) {
+      v = v.concat(ary)
+    }
+    let result = []
+    for (var i = 0; i < array.length; i++) {
+      for (var j = 0; j < v.length; j++) {
+        if (iter(array[i]) == iter(v[j])) break
+        if (j == v.length - 1) result.push(array[i])
+      }
+    }
+    return result
+  }
+
+  function differenceWith(array, ...value) {
+    if (Array.isArray(value[value.length - 1])) {
+      var iter = identity
+    } else {
+      var iter = iteratee(value.pop())
+    }
+    var v = []
+    for (var ary of value) {
+      v = v.concat(ary)
+    }
+    let result = []
+    for (var i = 0; i < array.length; i++) {
+      for (var j = 0; j < v.length; j++) {
+        if (iter(array[i], v[j])) break
+        if (j == v.length - 1) result.push(array[i])
+      }
+    }
+    return result
+  }
+
+
+  //从左边开始，抛掉n 个数组元素
+  function drop(array, n = 1) {
+    while (n--) {
+      array.shift()
+    }
+    return array
+  }
+  
+  //从右边开始，抛掉n 个数组元素
+  function dropRight(array, n = 1) {
+    while (n--) {
+      array.pop()
+    }
+    return array
+  }
+
+  //从右边开始, 抛出元素，predicate（）函数返回值为false时，停止抛出
+  function dropRightWhile(array, predicate = identity) {
+    array = array.slice()
+    predicate = iteratee(predicate)
+    for (var i = array.length - 1; i >= 0; i--) {
+      if (predicate(array[i], i, array)) {
+        array.pop()
+      }else break
+    }
+    return array
+  }
+
+  //从左边开始, 抛出元素，predicate（）函数返回值为false时，停止抛出
+  function dropWhile(array, predicate = identity) {
+    array = array.slice()
+    predicate = iteratee(predicate)
+    for (var i = 0; i < array.length ; i++) {
+      if (predicate(array[i], i, array)) {
+        array.shift()
+        i--
+      }else break
+    }
+    return array
+  }
+
+  //数组填充
+  function fill(array, value, start = 0, end = array.length) {
+    array = array.slice()
+    for (var i = start; i < end; i++) {
+      array[i] = value
+    }
+    return array
+  }
+
+  function findIndex(array, predicate = identity, fromIndex = 0) {
     
   }
 
 
 
-
-
-
-
-
-  function parseJson(str) {
-    var i = 0
-    return parseValue()
-    function parseValue() {
-      if (str[i] == '[') {
-        return parseArray()
-      }
-      if (str[i] == '{') {
-        return parseObject()
-      }
-      if (str[i] == '"') {
-        return parseString()
-      }
-      if (str[i] == 't') {
-        return parseTrue()
-      }
-      if (str[i] == 'f') {
-        return parseFalse()
-      }
-      if (str[i] == 'n') {
-        return parseNull()
-      }
-      return parseNumber()
-
-    }
-
-    function parseTrue() {
-      i += 4
-      return true
-    }
-    function parseFalse() {
-      i += 5
-      return false
-    }
-    function parseNull() {
-      i += 4
-      return null
-    }
-
-    function parseString() {
-      var star = ++i
-      while (str[i] !== '"') {
-        i++
-      }
-      return str.slice(star, i++)
-    }
-    function parseNumber() {
-      var star = i
-      while (str[i] >= '0' && str[i] <= '9') {
-        i++
-      }
-      return Number(str.slice(star, i))
-    }
-
-    function parseArray() {
-      var result = []
-      i++
-      while (str[i] !== ']') {
-        result.push(parseValue())
-        if (str[i] == ',') {
-          i++
-        }
-      }
-      i++
-      return result
-    }
-
-    function parseObject() {
-      var result = {}
-      i++
-      while (str[i] !== '}') {
-        var key = parseValue()
-        i++
-        var val = parseValue()
-        result[key] = val
-        if (str[i] == ',') {
-          i++
-        }
-      }
-      i++
-      return result
-    }
-  }
-
   return {
+    //Array
     chunk,
     compact,
+    concat,
+    difference,
+    differenceBy,
+    differenceWith,
+    drop,
+    dropRight,
+    dropRightWhile,
+    dropWhile,
+    fill,
+
+
+    
     uniq,
     uniqBy,
     flattenDeep,
@@ -514,16 +715,13 @@ var richlau007 = function () {
     groupBy,
     keyBy,
     forEach,
-    drop,
-    dropRight,
-    difference,
-    differenceBy,
-    differenceWith,
 
     isMatch,
     matches,
     matchesProperty,
     property,
+
+    bind,
     map,
     filter,
     get,
@@ -531,7 +729,16 @@ var richlau007 = function () {
     toPath,
     parseJson,
     identity,
-    
+
+    sumBy,
+    sum,
+
+    some,
+    every,
+    sortBy,
+    intersectionBy,
+    sortedIndexBy,
+    sortedIndex,
 
   }
 }()
