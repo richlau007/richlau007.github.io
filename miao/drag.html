@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      position: relative;
+    }
+
+    div {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+
+    }
+
+    #d1 {
+      /* top: 11px;
+    left: 11px; */
+      background-color: yellow;
+    }
+
+    #d2 {
+      background-color: red;
+    }
+
+    #d3 {
+      background-color: blue;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="d1"></div>
+  <div id="d2"></div>
+  <div id="d3"></div>
+
+
+  <script>
+
+
+//css 写的东西，js都读不到
+
+
+    var clickD1 = false
+    var clickD2 = false
+    var clickD3 = false
+    var lastx
+    var lasty
+    var z = 0
+
+
+    d1.style.left = 11 + 'px'
+    d1.style.top = 11 + 'px'
+    d2.style.left = 22 + 'px'
+    d2.style.top = 22 + 'px'
+    d3.style.left = 33 + 'px'
+    d3.style.top = 33 + 'px'
+    d1.addEventListener('mousedown', function (e) {
+      clickD1 = true
+      clickFunc(d1, e)
+      // d1.style.zIndex = ++z + ''
+      // lastx = e.pageX
+      // lasty = e.pageY
+      // console.log(this,lastx,lasty,e)
+    })
+    d2.addEventListener('mousedown', function (e) {
+      clickD2 = true
+      clickFunc(d2, e)
+    })
+    d3.addEventListener('mousedown', function (e) {
+      clickD3 = true
+      clickFunc(d3, e)
+    })
+
+    document.addEventListener('mouseup',function(e){
+      clickD1 = false
+      clickD2 = false
+      clickD3 = false
+    })
+    document.addEventListener('mousemove', function (e) {
+      if(e.pageX > 0 && e.pageX < innerWidth && e.pageY > 0 && e.pageY < innerHeight){
+        // console.log(e.pageX,e.pageY)
+        if (clickD1 && e.which == 1) {
+          // console.log(11,d1.style.left,d2.style.top, parseFloat(d1.style.left))
+          // d1.style.left = parseInt(d1.style.left) + (e.pageX - lastx) +'px'
+          // d1.style.top = parseInt(d1.style.top) + (e.pageY - lasty) +'px'
+          // lastx = e.pageX
+          // lasty = e.pageY
+          moveFunc(d1, e)
+        }
+        else if (clickD2 && e.which == 1) {
+          moveFunc(d2, e)
+        }
+        else if (clickD3 && e.which == 1) {
+          moveFunc(d3, e)
+        } else {
+          clickD1 = false
+          clickD2 = false
+          clickD3 = false
+        }
+      }
+      // console.log(innerHeight,innerWidth,d1.style.width,d1.style.height)
+    })
+
+    function moveFunc(d, e) {
+      d.style.left = parseInt(d.style.left) + (e.pageX - lastx) + 'px'
+      d.style.top = parseInt(d.style.top) + (e.pageY - lasty) + 'px'
+      lastx = e.pageX
+      lasty = e.pageY
+    }
+
+    function clickFunc(d, e) {
+      d.style.zIndex = ++z + ''
+      lastx = e.pageX
+      lasty = e.pageY
+    }
+
+  </script>
+
+</body>
+
+</html>
