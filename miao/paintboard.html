@@ -5,11 +5,56 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    svg{
+      border:1px solid lightblue;
+    }
+  </style>
 </head>
 <body>
   
 
   <!-- 画图ctrl+z撤销
   画图增加可以设置线条粗细的功能 -->
+
+  <script>
+
+
+  //通过createElementNS创建svg元素并设置属性
+  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute("style", "width:500px;height:500px;");
+  svg.setAttribute("viewBox", "0 0 500 500");
+
+  document.body.append(svg)
+
+  svg.addEventListener('mousedown', e =>{
+
+    var polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+    polyline.setAttribute('fill', 'none')
+    polyline.setAttribute('stroke', 'red')
+    polyline.setAttribute('stroke-width', 1)
+    polyline.setAttribute('stroke-linecap', 'round')
+    polyline.setAttribute('stroke-linejoin', 'round')
+    var points = `${e.clientX},${e.clientY} `
+    // points += '1,1 2,2 3,3 11,10 19,8'
+    polyline.setAttribute('points', points)
+    
+    
+    svg.addEventListener('mousemove' , function f(e1) {
+      points += `${e1.clientX},${e1.clientY} `
+      polyline.setAttribute('points', points)
+      
+    })
+    svg.addEventListener('mouseup',function f2(){
+      // 结束很重要
+      // points += 'null'
+      // polyline.setAttribute('points', points)
+      svg.removeEventListener('mousemove', f)
+      svg.removeEventListener('mouseup', f2)
+    })
+    svg.append(polyline)
+  })
+
+  </script>
 </body>
 </html>

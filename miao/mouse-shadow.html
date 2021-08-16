@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+  </style>
+</head>
+
+<body>
+
+  <script>
+    var v = 0
+    var trail = []
+    var sto = []
+    for (var i = 0; i < 8; i++) {
+      let item = document.createElement('div')
+      item.style.left = '-999px'
+      item.style.top = '-999px'
+      item.style.width = '5px'
+      item.style.height = '5px'
+      item.style.backgroundColor = 'red'
+      item.style.position = 'absolute'
+      document.body.append(item)
+      trail.push(item)
+    }
+    document.addEventListener('mousemove', e => {
+      var it = v % 16
+      if (it % 2 == 0) {
+        it /= 2
+        // console.log(it)
+        clearTimeout(sto[it])
+        trail[it].style.left = e.pageX + 'px'
+        trail[it].style.top = e.pageY + 'px'
+        sto[it] = setTimeout(() => {
+          trail[it].style.left = -999 + 'px'
+          trail[it].style.top = -999 + 'px'
+        }, 200)
+      }
+      v++
+
+    })
+  </script>
+</body>
+
+</html>
