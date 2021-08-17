@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  html,body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  div{
+    border: 1px solid lightblue;
+    box-sizing: border-box;
+  }
+</style>
+<body>
+  <div><button>+</button></div>
+  <div style="width: 30%;height: 100%; float: left;" id="allNote"></div>
+  <div style="width: 70%;height: 100%; float: left;">
+  <textarea name="" id="" cols="30" rows="10" style="width: 100%; height: 100%;"></textarea>
+  </div>
+
+  
+  <script>
+    let note = document.querySelector("textarea");
+
+    //保存仓库对象
+    let state;
+    function setState(newState) {
+      console.log(newState)
+      allNote.innerHTML = ""
+      for (let name of Object.keys(newState.notes)) {
+        let div = document.createElement('div')
+        allNote.append(div)
+        div.value = name
+        console.log(div.value,name)
+        div.textContent = name + "\n" +newState.notes[name]['time'];
+        div.addEventListener('click',e =>{
+          // console.log(div.value)
+          state.selected = div.value
+          setState(state)
+        })
+        // let option = document.createElement("option");
+        // option.textContent = name;
+        // if (newState.selected == name) option.selected = true;
+        // list.appendChild(option);
+      }
+      note.value =newState.notes[newState.selected].content ;
+
+      // 这里设置localStorage的key为Notes
+      //存储方式为JSON
+      localStorage.setItem("Notes", JSON.stringify(newState));
+      state = newState;
+    }
+
+
+    //初始化，
+    //localStorage.Note  JSON存储内容
+    //{"notes":{"shopping list":"Carrots\nRaisins","first note":"fdsjkahajk"},"selected":"first note"}
+    setState(JSON.parse(localStorage.getItem("Notes")) || {
+      notes: { "the First note": {'content': "My first note!",'time': getTime()} },
+      selected: "the First note"
+    });
+
+    //监听选择框有没有变化
+    // list.addEventListener("change", () => {
+    //   setState({ notes: state.notes, selected: list.value });
+    // });
+
+    // 监听内容框有没有变化
+    note.addEventListener("change", () => {
+      // setState({
+      //   notes: Object.assign({}, state.notes,
+      //     { [state.selected]: { 'content': note.value } }),
+      //   selected: state.selected
+      // });
+      state.notes[state.selected].content = note.value;
+      localStorage.setItem("Notes", JSON.stringify(state));
+    });
+
+    //新建note
+    document.querySelector("button")
+      .addEventListener("click", () => {
+        let name = prompt("Note name");
+        if (name) setState({
+          notes: Object.assign({}, state.notes, { [name]: {'content': "", 'time': getTime()} }),
+          selected: name
+        });
+        console.log(state)
+      });
+
+      function getTime(){
+        var t = new Date()
+        // console.log(t.getFullYear + '-' + t.getMonth + '-' + t.getDate + ' ' + t.getHours + '-' + t.getSeconds)
+        return t.getFullYear() +'-'+ (Number(t.getMonth()) + 1) +'-'+ t.getDate() +' '+ t.getHours() +'-' +t.getMinutes()
+      }
+  </script>
+</body>
+</html>

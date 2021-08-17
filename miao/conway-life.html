@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* input {
+      margin: 0;
+      padding: 0;
+      font-size: 10px;
+      line-height: 10px;
+      margin-top: -5px;
+      color: GRAY;
+    } */
+  </style>
+</head>
+<body>
+  <script>
+    var next = document.createElement('button')
+    var start = document.createElement('button')
+    var s = document.createElement('button')
+    document.body.append(next)
+    document.body.append(start)
+    document.body.append(s)
+    document.body.append(document.createElement('br'))
+    next.textContent = 'next'
+    start.textContent = 'start'
+    s.textContent = 'stop'
+
+
+next.addEventListener('click', e =>{
+  n()
+})
+
+var theID
+start.addEventListener('click', e =>{
+  n()
+ theID = setInterval(() => {
+   n()
+  //  console.log(2222222)
+ }, 1000);
+})
+s.addEventListener('click', e =>{
+
+  clearInterval(theID)
+  
+ 
+})
+
+    var num = 70
+    var checkboxs = []
+    for(var i = 0 ; i < num;i++){
+      var mid = []
+      for(var j = 0 ; j < num ; j++){
+        let cb = document.createElement('input')
+        cb.type = "checkbox"
+        document.body.append(cb)
+        mid.push(cb)
+
+        if(Math.random() > 0.5){
+          cb.checked = true
+        }
+      }
+      checkboxs.push(mid)
+      document.body.append(document.createElement('br'))
+    }
+
+
+
+
+    function n(){
+      var arr = new Array(num); //表格有10行
+      for (var i = 0; i < arr.length; i++) {
+        arr[i] = new Array(num).fill(0); //每行有10列
+      }
+
+      for(var k = 0 ; k < num;k++){
+        for(var l = 0 ; l < num ; l++){
+  
+          if(checkboxs[k][l].checked){
+            if(k == 0) var y1 = 0, y2= k + 1
+            else if(k == num - 1) var y1 = k - 1 ,y2 = num - 1
+            else var y1 = k - 1 , y2 = k + 1
+  
+            if (l == 0) var x1 = 0, x2 = l + 1
+            else if (l == num - 1) var x1 = l - 1, x2 = num - 1
+            else var x1 = l - 1, x2 = l + 1
+  
+            for(var y = y1 ; y <= y2 ;y++){
+              for(var x = x1 ; x <= x2 ; x++){
+                if(y == k && x == l){
+                  continue
+                }
+                arr[y][x]++
+              }
+            }
+          }
+        }
+      }
+
+      for (var i = 0; i < num; i++) {
+        for (var j = 0; j < num; j++) {
+          if(checkboxs[i][j].checked && (arr[i][j] == 2 || arr[i][j] == 3)){
+            checkboxs[i][j].checked = true
+          } else if (!checkboxs[i][j].checked &&  arr[i][j] == 3){
+            checkboxs[i][j].checked = true
+          }else {
+            checkboxs[i][j].checked = false
+          }
+        }
+      }
+      // console.log(arr)  
+    }
+
+  </script>
+</body>
+</html>
