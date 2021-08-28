@@ -142,32 +142,7 @@ var richlau007 = function () {
     
   }
 
-  function flattenDeep(array) {
-    var result = []
-    for (var i = 0; i < array.length; i++){
-      if (Array.isArray(array[i])) {
-        //result.concat必须对result进行赋值
-          result = result.concat(flattenDeep(array[i]))
-      } else {
-        result.push(array[i])
-      }
-    }
-    return result
-  }
-
-  function flattenDepth(array, depth = 1) {
-    if(depth == 0 ) return array
-    let result = []
-    for (let i = 0; i < array.length; i++) {
-      if (Array.isArray(array[i])) {
-        //result.concat必须对result进行赋值
-        result = result.concat(flattenDepth(array[i],depth - 1))
-      } else {
-        result.push(array[i])
-      }
-    }
-    return result
-  }
+  
   function groupBy(collection, iteratee) {
     let obj = {}
     for (var i = 0; i < collection.length; i++){
@@ -687,7 +662,72 @@ var richlau007 = function () {
   }
 
   function findIndex(array, predicate = identity, fromIndex = 0) {
-    
+    predicate = iteratee(predicate)
+    for (var i = fromIndex; i < array.length; i++){
+      if(predicate(array[i])) return i
+    }
+  }
+
+  function findLastIndex(array, predicate = identity, fromIndex = array.length - 1) {
+    predicate = iteratee(predicate)
+    for (var i = fromIndex; i >= 0; i--){
+      if(predicate(array[i])) return i
+    }
+  }
+
+  function flatten(array) {
+   return  flattenDepth(array)
+  }
+
+  function flattenDeep(array) {
+    // var result = []
+    // for (var i = 0; i < array.length; i++) {
+    //   if (Array.isArray(array[i])) {
+    //     //result.concat必须对result进行赋值
+    //     result = result.concat(flattenDeep(array[i]))
+    //   } else {
+    //     result.push(array[i])
+    //   }
+    // }
+    // return result
+    return flattenDepth(array,Infinity)
+  }
+
+  function flattenDepth(array, depth = 1) {
+    if (depth == 0) return array
+    let result = []
+    for (let i = 0; i < array.length; i++) {
+      if (Array.isArray(array[i])) {
+        //result.concat必须对result进行赋值
+        result = result.concat(flattenDepth(array[i], depth - 1))
+      } else {
+        result.push(array[i])
+      }
+    }
+    return result
+  }
+
+  function fromPairs(pairs) {
+    var result = {}
+    for (var element of pairs) {
+      result[element[0]] = element[1]
+    }
+    return result
+  }
+
+  function head(array) {
+    return array[0]
+  }
+
+  function indexOf(array, value, fromIndex = 0){
+    for (var i = fromIndex; i < array.length; i++){
+      if(array[i] == value) return i
+    }
+  }
+
+  function initial(array) {
+    array.pop()
+    return array
   }
 
 
@@ -705,13 +745,21 @@ var richlau007 = function () {
     dropRightWhile,
     dropWhile,
     fill,
+    findIndex,
+    findLastIndex,
+    flatten,
+    flattenDeep,
+    flattenDepth,
+    fromPairs,
+    head,
+    indexOf,
+    initial,
 
 
     
     uniq,
     uniqBy,
-    flattenDeep,
-    flattenDepth,
+    
     groupBy,
     keyBy,
     forEach,
