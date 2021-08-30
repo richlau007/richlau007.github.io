@@ -415,30 +415,7 @@ var richlau007 = function () {
     return sumBy(ary)
   }
 
-
-
-  function intersectionBy(...arrays) {
-    if (Array.isArray(arrays[arrays.length - 1])) {
-      var iter = identity
-    } else {
-      var iter = iteratee(arrays.pop())
-    }
-    var array = arrays.shift()
-    var v = []
-    for (var ary of arrays) {
-      v = v.concat(ary)
-    }
-    let result = []
-    for (var i = 0; i < array.length; i++) {
-      for (var j = 0; j < v.length; j++) {
-        if (iter(array[i]) == iter(v[j])) {
-          result.push(array[i])
-          break
-        }
-      }
-    }
-    return result
-  }
+  
 
 
 
@@ -680,16 +657,6 @@ var richlau007 = function () {
   }
 
   function flattenDeep(array) {
-    // var result = []
-    // for (var i = 0; i < array.length; i++) {
-    //   if (Array.isArray(array[i])) {
-    //     //result.concat必须对result进行赋值
-    //     result = result.concat(flattenDeep(array[i]))
-    //   } else {
-    //     result.push(array[i])
-    //   }
-    // }
-    // return result
     return flattenDepth(array,Infinity)
   }
 
@@ -730,6 +697,106 @@ var richlau007 = function () {
     return array
   }
 
+  function intersection(...arrays) {
+    return intersectionBy(...arrays)
+  }
+
+  function intersectionBy(...arrays) {
+    if (Array.isArray(arrays[arrays.length - 1])) {
+      var predicate = identity
+    } else {
+      var predicate = arrays.pop()
+      predicate = iteratee(predicate)
+    }
+    var result = []
+    var arr = arrays.shift()
+    for (var i = 0; i < arrays.length; i++) {
+      for (var j = 0; j < arrays[i].length; j++) {
+        for (var k = 0; k < arr.length; k++) {
+          if (predicate(arrays[i][j]) == predicate(arr[k])) {
+            result.push(arr[k])
+          }
+        }
+      }
+    }
+    
+    return result
+  }
+  function intersectionWith(...arrays) {
+    if (Array.isArray(arrays[arrays.length - 1])) {
+      var predicate = identity
+    } else {
+      var predicate = arrays.pop()
+      predicate = iteratee(predicate)
+    }
+    var result = []
+    var arr = arrays.shift()
+    for (var i = 0; i < arrays.length; i++) {
+      for (var j = 0; j < arrays[i].length; j++) {
+        for (var k = 0; k < arr.length; k++) {
+          if (predicate(arrays[i][j],arr[k])) {
+            result.push(arr[k])
+          }
+        }
+      }
+    }
+    
+    return result
+  }
+
+  function join(array, separator=',') {
+    var str = ''
+    for (let element of array) {
+      str += element + separator
+    }
+    if (str.length) {
+      str = str.slice(0,-separator.length)
+    }
+    return str
+  }
+  function last(array) {
+    return array.pop()
+  }
+
+  function lastIndexOf(array, value, fromIndex = array.length - 1) {
+    for (let i = fromIndex; i >= 0;i--) {
+      if (array[i] == value) {
+        return i
+      }
+    }
+  }
+
+  function nth(array, n = 0) {
+    if (n < 0) {
+      n = array.length  + n 
+    }
+    return array[n]
+  }
+
+  function pull(array, ...values) {
+    for (var i = 0; i < values.length; i++){
+       remove(array,it => it == values[i])
+    }
+    // console.log(array)
+    return array
+  }
+
+
+
+
+  //
+  function remove(array, predicate = identity) {
+    predicate = iteratee(predicate)
+    var result = []
+    for (var i = 0; i < array.length; i++){
+      if (predicate(array[i])) {
+        result.push(array[i])
+        array.splice(i,1)
+      }
+    }
+    return result
+  }
+
 
 
   return {
@@ -754,6 +821,19 @@ var richlau007 = function () {
     head,
     indexOf,
     initial,
+    intersection,
+    intersectionBy,
+    intersectionWith,
+    join,
+    last,
+    lastIndexOf,
+    nth,
+    pull,
+
+
+    remove,
+
+
 
 
     
@@ -784,7 +864,7 @@ var richlau007 = function () {
     some,
     every,
     sortBy,
-    intersectionBy,
+    
     sortedIndexBy,
     sortedIndex,
 
