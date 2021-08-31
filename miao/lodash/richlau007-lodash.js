@@ -797,6 +797,31 @@ var richlau007 = function () {
     return result
   }
 
+  function reverse(array) {
+    var i = 0
+    var j = array.length - 1
+    while (i < j) {
+      var tmp = array[i]
+      array[i] = array[j]
+      array[j] = tmp
+      i++
+      j--
+    }
+    return array
+  }
+
+  function slice(array, start = 0, end = array.length) {
+    var i = start
+    var j = array.length - end
+    while (i > 0) {
+      array.shift()
+    }
+    while (j > 0) {
+      array.pop()
+    }
+    return array
+  }
+
 
 
   return {
@@ -832,6 +857,8 @@ var richlau007 = function () {
 
 
     remove,
+    reverse,
+    slice,
 
 
 
