@@ -105,42 +105,7 @@ var richlau007 = function () {
 
  
 
-  function uniq(array) {
-    let result = []
-    let obj = {}
-    for (var i = 0; i < array.length; i++){
-      if (array[i] in obj) continue
-      else {
-        obj[array[i]] = true
-        result.push(array[i])
-      }
-    }
-    return result
-  }
-
-
-  function uniqBy(array,f) {
-    let result = []
-    let obj = {}
-    for (var i = 0; i < array.length; i++) {
-      let item
-      if (typeof(array[i])=== "object") {
-        item = array[i][f]
-      } else {
-        item = f(array[i])
-      }
-      if (item in obj) continue
-      else {
-        obj[item] = true
-        result.push(array[i])
-      }
-    }
-    return result
-  }
-
-  function uniqWith() {
-    
-  }
+  
 
   
   function groupBy(collection, iteratee) {
@@ -420,49 +385,7 @@ var richlau007 = function () {
 
 
 
-//-------------------------sort相关------------------------------
-  //二分查找，返回value插入位置，最小值
-  function sortedIndexBy(array, value, predicate = identity,l = 0 ,r = array.length - 1) {
-    predicate = iteratee(predicate)
 
-    if (l >= r) {
-      if (predicate(array[l]) >= predicate(value)) return l
-      else return l + 1
-    }
-    var minIdx = (l + r ) / 2 | 0
-    if (predicate(array[minIdx]) < predicate(value)) {
-      return sortedIndexBy (array,value,predicate,minIdx + 1,r)
-    } else {
-      return sortedIndexBy(array, value, predicate, l, minIdx - 1)
-    }
-  }
-
-  function sortedIndex(array, value) {
-    return sortedIndexBy(array, value)
-  }
-
-  //解决对象排序的问题
-  //解决多重排序的问题
-  //第二个参数是一个数组
-  function sortBy(array, predicate = [identity]) {
-    var iter = iteratee(predicate.pop())
-    for (var i = 1; i < array.length; i++) {
-      var tmp = array[i]
-      for (var j = i - 1; j >= 0; j--) {
-        if (iter(array[j]) > iter(tmp)) array[j + 1] = array[j]
-        else {
-          break
-        }
-      }
-
-      array[j + 1] = tmp
-      // console.log(array)
-    }
-    if (predicate.length) {
-      sortBy(array, predicate)
-    }
-    return array
-  }
 
 
   //------------------------some/every---------------------------
@@ -822,6 +745,173 @@ var richlau007 = function () {
     return array
   }
 
+  //-------------------------sort相关------------------------------
+  //二分查找，返回value插入位置，最小值
+  function sortedIndexBy(array, value, predicate = identity, l = 0, r = array.length - 1) {
+    predicate = iteratee(predicate)
+
+    if (l >= r) {
+      if (predicate(array[l]) >= predicate(value)) return l
+      else return l + 1
+    }
+    var minIdx = (l + r) / 2 | 0
+    if (predicate(array[minIdx]) < predicate(value)) {
+      return sortedIndexBy(array, value, predicate, minIdx + 1, r)
+    } else {
+      return sortedIndexBy(array, value, predicate, l, minIdx - 1)
+    }
+  }
+
+  function sortedIndex(array, value) {
+    return sortedIndexBy(array, value)
+  }
+
+  //解决对象排序的问题
+  //解决多重排序的问题
+  //第二个参数是一个数组
+  function sortBy(array, predicate = [identity]) {
+    var iter = iteratee(predicate.pop())
+    for (var i = 1; i < array.length; i++) {
+      var tmp = array[i]
+      for (var j = i - 1; j >= 0; j--) {
+        if (iter(array[j]) > iter(tmp)) array[j + 1] = array[j]
+        else {
+          break
+        }
+      }
+
+      array[j + 1] = tmp
+      // console.log(array)
+    }
+    if (predicate.length) {
+      sortBy(array, predicate)
+    }
+    return array
+  }
+
+  function union(...arrays) {
+    return unionBy(...arrays)
+  }
+  function unionBy(...arrays) {
+    var result = []
+    var mid = {}
+    if (Array.isArray(arrays[arrays.length - 1])) {
+      var predicate = identity
+    } else {
+      var predicate = iteratee(arrays.pop())
+    }
+
+    for (var i = 0; i < arrays.length; i++){
+      for (var j = 0; j < arrays[i].length; j++){
+        if (predicate(arrays[i][j]) in mid) {
+          continue
+        } else {
+          mid[predicate(arrays[i][j])] = true
+          result.push(arrays[i][j])
+        }
+      }
+    }
+    return result
+  }
+
+  function uniq(array) {
+    let result = []
+    let obj = { }
+    for (var i = 0; i < array.length; i++) {
+      if (array[i] in obj) continue
+      else {
+        obj[array[i]] = true
+        result.push(array[i])
+      }
+    }
+    return result
+  }
+
+
+  function uniqBy(array, f) {
+    let result = []
+    let obj = { }
+    for (var i = 0; i < array.length; i++) {
+      let item
+      if (typeof (array[i]) === "object") {
+        item = array[i][f]
+      } else {
+        item = f(array[i])
+      }
+      if (item in obj) continue
+      else {
+        obj[item] = true
+        result.push(array[i])
+      }
+    }
+    return result
+  }
+
+  function uniqWith() {
+
+  }
+
+  function unzip(array) {
+    // var result = []
+    // var l = array.map(it => it.length).reduce((pre,it) => Math.max(pre,it),0)
+    // for (var i = 0; i < l; i++){
+    //   var mid = []
+    //   for (var j = 0; j < array.length; j++){
+    //     mid.push(array[j][i])
+    //   }
+    //   result.push(mid)
+    // }
+    // return result
+    return zip(...array)
+  }
+
+  function zip(...arrays) {
+    var result = []
+    var l = arrays.map(it => it.length).reduce((pre,it) => Math.max(pre,it),0)
+    for (var i = 0; i < l; i++){
+      var mid = []
+      for (var j = 0; j < arrays.length; j++){
+        mid.push(arrays[j][i])
+      }
+      result.push(mid)
+    }
+    return result
+  }
+
+  function without(array, ...values) {
+    var result = []
+    for (var i = 0; i < array.length; i++){
+      for (var j = 0; j < values.length; j++){
+        if (array[i] == values[j]) break
+        if(j == values.length - 1) result.push(array[i])
+      }
+    }
+    return result
+  }
+
+  function xor(...arrays) {
+    var obj = {}
+    var result = []
+    for (var i = 0; i < arrays.length; i++){
+      for (var j = 0; j < arrays[i].length; j++){
+        if (arrays[i][j] in obj) {
+          obj[arrays[i][j]]++
+        } else {
+          obj[arrays[i][j]] = 1  
+        }
+      }
+    }
+    for (let element in obj) {
+      if (obj[element] == 1) {
+        // if (element >= '0' && element <= '9') {
+        //   element = Number(element)
+        // }
+        result.push(element)
+      }
+    }
+    return result
+  }
+
 
 
   return {
@@ -859,13 +949,18 @@ var richlau007 = function () {
     remove,
     reverse,
     slice,
+    sortedIndex,
+    sortedIndexBy,
 
+    union,
+    unionBy,
 
-
-
-    
     uniq,
     uniqBy,
+    unzip,
+    zip,
+    without,
+    xor,
     
     groupBy,
     keyBy,
@@ -892,8 +987,7 @@ var richlau007 = function () {
     every,
     sortBy,
     
-    sortedIndexBy,
-    sortedIndex,
+    
 
   }
 }()
