@@ -152,28 +152,46 @@ var richlau007 = function () {
 
 
 
-  function identity(value){
+
+
+
+//------------------------lodash的核心，阅读普通函数钱一定需要了解以下核心转化函数---------------------------------
+  //就是返回自身的函数 
+  function identity(value) {
     return value
   }
+  // 第一步，类型分发
+  // 判断传入参数类型的，兼容function，object、array、string
+  function iteratee(maybePredicate) {
 
+    //传入函数  直接返回当前函数
+    if (typeof maybePredicate == 'function') {
+      return maybePredicate
+    }
 
-//---------------------------------------------------------
-  // map
-  //支持数组 和 对象
+    // 传入字符串，进入处理字符串函数
+    if (typeof maybePredicate == 'string') {
+      return property(maybePredicate)
+    }
+    
+    if (Array.isArray(maybePredicate)) {
+      return matchesProperty(...maybePredicate)
+    }
+    if (typeof maybePredicate == 'object') {
+      return matches(maybePredicate)
+    }
+  }
 
 
   //传入属性名，它返回的函数就用来获取对象的属性名
-  //
   function property(prop) {
     return function (obj) {
-      // return obj[prop]
-      return get(obj,prop)
+      return get(obj, prop)
     }
-    // return bind(get,null,'__',prop)
   }
 
 
-//默认了path 是数组（不符合真实情况）
+//默认了path 是数组
   function get2(object, path, defaultVal = undefined) {
     path = toPath(path)
     for (var i = 0; i < path.length; i++){
@@ -265,21 +283,7 @@ var richlau007 = function () {
     }
   }
 
-  // 判断传入参数类型的，兼容function，object、array、string
-  function iteratee(maybePredicate) {
-    if (typeof maybePredicate == 'function') {
-      return maybePredicate
-    }
-    if (typeof maybePredicate == 'string') {
-      return property(maybePredicate)
-    }
-    if (Array.isArray(maybePredicate)) {
-      return matchesProperty(...maybePredicate)
-    }
-    if (typeof maybePredicate == 'object') {
-      return matches(maybePredicate)
-    }
-  }
+
 
 
 
@@ -670,10 +674,10 @@ var richlau007 = function () {
   function join(array, separator=',') {
     var str = ''
     for (let element of array) {
-      str += element + separator
+      str += String(element) + separator
     }
     if (str.length) {
-      str = str.slice(0,-separator.length)
+      str = str.slice(0,str.length - 1)
     }
     return str
   }
@@ -687,6 +691,7 @@ var richlau007 = function () {
         return i
       }
     }
+    return -1
   }
 
   function nth(array, n = 0) {
@@ -697,14 +702,22 @@ var richlau007 = function () {
   }
 
   function pull(array, ...values) {
-    for (var i = 0; i < values.length; i++){
-       remove(array,it => it == values[i])
-    }
-    // console.log(array)
+
+    pullAll(array,values)
     return array
   }
 
+  function pullAll(array, values) {
+    return pullAllBy(array,values)
+  }
 
+  function pullAllBy(array, values, predicate = identity) {
+    predicate = iteratee(predicate)
+    for (var i = 0; i < values.length; i++) {
+      remove(array, it => predicate(it) == predicate(values[i]))
+    }
+    return array
+  }
 
 
   //
@@ -744,6 +757,299 @@ var richlau007 = function () {
     }
     return array
   }
+
+  //sort相关的
+  //
+  //
+  //
+  //
+
+  function tail(array) {
+    array.shift()
+    return array
+  }
+
+  function take(array, n = 1) {
+    return array.slice(0,n)
+  }
+
+  function takeRight(array, n = 1) {
+    if (array.length >= n) {
+      return array.slice(array.length - n ,array.length)
+    }
+    return array
+  }
+
+  function takeRightWhile(array, predicate = identity) {
+    predicate = iteratee(predicate)
+    let result = []
+    for (let i = array.length - 1; i >=0; i--){
+      if (!predicate(array[i])) {
+        return result
+      }
+      result.unshift(array[i])
+    }
+  }
+
+  function takeWhile(array, predicate = identity) {
+    predicate = iteratee(predicate)
+    let result = []
+    for (let i = 0; i < array.length; i++){
+      if (!predicate(array[i])) {
+        return result
+      }
+      result.push(array[i])
+    }
+  }
+
+  function union(...arrays) {
+    return unionBy(...arrays)
+  }
+  function unionBy(...arrays) {
+    var result = []
+    var mid = {}
+    if (Array.isArray(arrays[arrays.length - 1])) {
+      var predicate = identity
+    } else {
+      var predicate = iteratee(arrays.pop())
+    }
+
+    for (var i = 0; i < arrays.length; i++) {
+      for (var j = 0; j < arrays[i].length; j++) {
+        if (predicate(arrays[i][j]) in mid) {
+          continue
+        } else {
+          mid[predicate(arrays[i][j])] = true
+          result.push(arrays[i][j])
+        }
+      }
+    }
+    return result
+  }
+
+  //需要equal函数  先写完再回来！！！！
+  function unionWith() {
+    
+
+  }
+
+
+
+
+  function uniq(array) {
+    return uniqBy(array)
+  }
+
+
+  function uniqBy(array, predicate = identity) {
+    predicate = iteratee(predicate)
+    let result = []
+    let obj = {}
+    for (var i = 0; i < array.length; i++) {
+      if (predicate(array[i]) in obj) continue
+      else {
+        obj[predicate(array[i])] = true
+        result.push(array[i])
+      }
+    }
+    return result
+  }
+
+  //需要equal函数  先写完再回来！！！！
+  function uniqWith() {
+
+  }
+
+  function unzip(array) {
+    return zip(...array)
+  }
+
+  function unzipWith(array, predicate = identity) {
+    return zipWith(...array,predicate)
+  }
+
+  function zip(...arrays) {
+    var result = []
+    var l = arrays.map(it => it.length).reduce((pre, it) => Math.max(pre, it), 0)
+    for (var i = 0; i < l; i++) {
+      var mid = []
+      for (var j = 0; j < arrays.length; j++) {
+        mid.push(arrays[j][i])
+      }
+      result.push(mid)
+    }
+    return result
+  }
+
+  function zipObject(prop=[],value = []) {
+    let obj = {}
+    for (let i = 0; i < prop.length; i++){
+      obj[prop[i]] = value[i] 
+    }
+    return obj
+  }
+
+  function zipObjectDeep(prop =[],value = []) {
+    let obj = {}
+    for (let i = 0; i < prop.length; i++){
+      let path = prop[i].split('.')
+      let o = obj
+      for (let j = 0; j < path.length; j++){
+        let idx = path[j].indexOf('[')
+        if (idx >= 0) {
+          let str = path[j].slice(0, idx)
+          if (str in o) {
+            let o3 = {}
+            o[str].push(o3)
+            o = o3
+          } else {
+            o[str] = []
+            let o2 = {}
+            o[str].push(o2)
+            o = o2
+          }
+        } else if (j == path.length -1) {
+          o[path[j]] = value[i]
+        } else {
+          if (path[j] in o) {
+            o = o[path[j]]
+          } else {
+            o[path[j]] = {}
+            o = o[path[j]]
+          }
+        }
+      }
+    }
+    return obj
+  }
+
+  function theArgs(arrays) {
+    if (Array.isArray(arrays[arrays.length - 1])) {
+      var predicate = identity
+    } else {
+      var predicate = iteratee(arrays.pop())
+    }
+    return [arrays,predicate]
+  }
+
+  function zipWith(...arrays) {
+    let [arr, predicate] = theArgs(arrays)
+    let result = []
+    if (arr[0].length > 0) {
+      for (let i = 0; i < arr[0].length; i++){
+        let mid = []
+        for (let j = 0; j < arr.length; j++){
+          mid.push(arr[j][i] )
+          if (j == arr.length - 1) {
+            result.push(predicate(...mid))
+          }
+        }
+      }
+    }
+    return result
+  }
+
+  function without(array, ...values) {
+    var result = []
+    for (var i = 0; i < array.length; i++) {
+      for (var j = 0; j < values.length; j++) {
+        if (array[i] == values[j]) break
+        if (j == values.length - 1) result.push(array[i])
+      }
+    }
+    return result
+  }
+
+  function xor(...arrays) {
+    // var obj = {}
+    // var result = []
+    // for (var i = 0; i < arrays.length; i++) {
+    //   for (var j = 0; j < arrays[i].length; j++) {
+    //     if (arrays[i][j] in obj) {
+    //       obj[arrays[i][j]][1]++
+
+    //     } else {
+    //       obj[arrays[i][j]] = [arrays[i][j],1]
+    //     }
+    //   }
+    // }
+    // for (let element in obj) {
+    //   if (obj[element][1] == 1) {
+    //     // if (element >= '0' && element <= '9') {
+    //     //   element = Number(element)
+    //     // }
+    //     result.push(obj[element][0])
+    //   }
+    // }
+    // return result
+    return xorBy(...arrays)
+  }
+
+  function xorBy(...arrays) {
+    let [arr, predicate] = theArgs(arrays)
+    var obj = {}
+    var result = []
+    for (var i = 0; i < arr.length; i++) {
+      for (var j = 0; j < arr[i].length; j++) {
+        let mid = predicate(arr[i][j])
+        if (mid in obj) {
+          obj[mid][1]++
+
+        } else {
+          obj[mid] = [arr[i][j], 1]
+        }
+      }
+    }
+    for (let element in obj) {
+      if (obj[element][1] == 1) {
+        result.push(obj[element][0])
+      }
+    }
+    return result
+  }
+
+  function xorWith() {
+    
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   //-------------------------sort相关------------------------------
   //二分查找，返回value插入位置，最小值
@@ -789,129 +1095,27 @@ var richlau007 = function () {
     return array
   }
 
-  function union(...arrays) {
-    return unionBy(...arrays)
-  }
-  function unionBy(...arrays) {
-    var result = []
-    var mid = {}
-    if (Array.isArray(arrays[arrays.length - 1])) {
-      var predicate = identity
-    } else {
-      var predicate = iteratee(arrays.pop())
-    }
-
-    for (var i = 0; i < arrays.length; i++){
-      for (var j = 0; j < arrays[i].length; j++){
-        if (predicate(arrays[i][j]) in mid) {
-          continue
-        } else {
-          mid[predicate(arrays[i][j])] = true
-          result.push(arrays[i][j])
-        }
-      }
-    }
-    return result
-  }
-
-  function uniq(array) {
-    let result = []
-    let obj = { }
-    for (var i = 0; i < array.length; i++) {
-      if (array[i] in obj) continue
-      else {
-        obj[array[i]] = true
-        result.push(array[i])
-      }
-    }
-    return result
-  }
+  
 
 
-  function uniqBy(array, f) {
-    let result = []
-    let obj = { }
-    for (var i = 0; i < array.length; i++) {
-      let item
-      if (typeof (array[i]) === "object") {
-        item = array[i][f]
+
+
+
+
+
+  // ----------------------collection-------------------
+  function countBy(collection, predicate = identity) {
+    predicate = iteratee(predicate)
+    var result = {}
+    for (let val in collection) {
+      if (predicate(collection[val]) in result) {
+        result[predicate(collection[val])]++
       } else {
-        item = f(array[i])
-      }
-      if (item in obj) continue
-      else {
-        obj[item] = true
-        result.push(array[i])
+        result[predicate(collection[val])] = 1
       }
     }
     return result
   }
-
-  function uniqWith() {
-
-  }
-
-  function unzip(array) {
-    // var result = []
-    // var l = array.map(it => it.length).reduce((pre,it) => Math.max(pre,it),0)
-    // for (var i = 0; i < l; i++){
-    //   var mid = []
-    //   for (var j = 0; j < array.length; j++){
-    //     mid.push(array[j][i])
-    //   }
-    //   result.push(mid)
-    // }
-    // return result
-    return zip(...array)
-  }
-
-  function zip(...arrays) {
-    var result = []
-    var l = arrays.map(it => it.length).reduce((pre,it) => Math.max(pre,it),0)
-    for (var i = 0; i < l; i++){
-      var mid = []
-      for (var j = 0; j < arrays.length; j++){
-        mid.push(arrays[j][i])
-      }
-      result.push(mid)
-    }
-    return result
-  }
-
-  function without(array, ...values) {
-    var result = []
-    for (var i = 0; i < array.length; i++){
-      for (var j = 0; j < values.length; j++){
-        if (array[i] == values[j]) break
-        if(j == values.length - 1) result.push(array[i])
-      }
-    }
-    return result
-  }
-
-  function xor(...arrays) {
-    var obj = {}
-    var result = []
-    for (var i = 0; i < arrays.length; i++){
-      for (var j = 0; j < arrays[i].length; j++){
-        if (arrays[i][j] in obj) {
-          obj[arrays[i][j]]++
-        } else {
-          obj[arrays[i][j]] = 1  
-        }
-      }
-    }
-    for (let element in obj) {
-      if (obj[element] == 1) {
-        // if (element >= '0' && element <= '9') {
-        //   element = Number(element)
-        // }
-        result.push(element)
-      }
-    }
-    return result
-  }
-
 
 
   return {
@@ -944,23 +1148,40 @@ var richlau007 = function () {
     lastIndexOf,
     nth,
     pull,
-
-
+    pullAll,
+    pullAllBy,
     remove,
     reverse,
     slice,
+
     sortedIndex,
     sortedIndexBy,
 
+    tail,
+    take,
+    takeRight,
+    takeRightWhile,
+    takeWhile,
     union,
     unionBy,
-
+    unionWith,
     uniq,
     uniqBy,
+    uniqWith,
     unzip,
+    unzipWith,
     zip,
+    zipObject,
+    zipObjectDeep,
+    zipWith,
     without,
     xor,
+    xorBy,
+    xorWith,
+
+
+    /////////
+    countBy,
     
     groupBy,
     keyBy,
