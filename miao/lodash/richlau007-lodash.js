@@ -311,23 +311,9 @@ var richlau007 = function () {
   }
   
 
-  //filter,兼容predicate  函数、对象、数组、字符串
-  function filter(collection, predicate) {
-    predicate = iteratee(predicate)
-    var result = []
-    for (var key in collection) {
-      if (predicate(collection[key], key, collection) === true) {
-        result.push(collection[key])
-      }
-    }
-    return result
-  }
 
-  function forEach(collection, action) {
-    for (let item in collection) {
-      action(collection[item], item)
-    }
-  }
+
+
 
 
 
@@ -402,15 +388,7 @@ var richlau007 = function () {
     }
     return false
   }
-  function every(collection, predicate = identity) {
-    predicate = iteratee(predicate)
-    for (var key in collection) {
-      if (!predicate(collection[key])) {
-        return false
-      }
-    }
-    return true
-  }
+ 
   
 
 //------------------------------Array-----------------
@@ -719,6 +697,10 @@ var richlau007 = function () {
     return array
   }
 
+  function pullAllWith() {
+    
+  }
+
 
   //
   function remove(array, predicate = identity) {
@@ -832,8 +814,6 @@ var richlau007 = function () {
     
 
   }
-
-
 
 
   function uniq(array) {
@@ -1012,7 +992,7 @@ var richlau007 = function () {
     
   }
 
-
+// ----------------------------------------------
 
 
 
@@ -1104,6 +1084,7 @@ var richlau007 = function () {
 
 
   // ----------------------collection-------------------
+  // 所谓的collection 其实就是利用 forin来实现遍历
   function countBy(collection, predicate = identity) {
     predicate = iteratee(predicate)
     var result = {}
@@ -1116,6 +1097,106 @@ var richlau007 = function () {
     }
     return result
   }
+
+
+  function every(collection, predicate = identity) {
+    predicate = iteratee(predicate)
+    for (var key in collection) {
+      if (!predicate(collection[key])) {
+        return false
+      }
+    }
+    return true
+  }
+
+  //filter,兼容predicate  函数、对象、数组、字符串
+  function filter(collection, predicate) {
+    predicate = iteratee(predicate)
+    var result = []
+    for (var key in collection) {
+      if (predicate(collection[key], key, collection) === true) {
+        result.push(collection[key])
+      }
+    }
+    return result
+  }
+
+  function find(collection,predicate=identity,fromIndex=0) {
+    predicate = iteratee(predicate)
+    var start = 0
+    for (let key in collection) {
+      if (predicate(collection[key]) && start >= fromIndex) {
+        return collection[key]
+      }
+    }
+  }
+
+  function findLast(collection, predicate = identity, fromIndex = collection.length - 1) {
+    predicate = iteratee(predicate)
+    let keys = Object.keys(collection)
+    for (let i = fromIndex; i >= 0; i--) {
+      if (predicate(collection[keys[i]])) {
+        return collection[keys[i]]
+      }
+    }
+  }
+
+  function flatMap(collection, predicate = identity) {
+    return flatMapDepth(collection, predicate)
+  }
+
+  function flatMapDeep(collection, predicate = identity) {
+    return flatMapDepth(collection,predicate,Infinity)
+  }
+  
+  //好好理解一下这里的思维方式！！！！！！！！
+  function flatMapDepth(collection, predicate = identity, depth = 1) {
+    predicate = iteratee(predicate)
+    let result = []
+    for (let key in collection) {
+      result.push(predicate(collection[key], key, collection))
+    }
+    return flattenDepth(result,depth)
+  }
+
+  function forEach(collection, predicate = identity) {
+    // let key = Object.keys(collection)
+    predicate = iteratee(predicate)
+    for (let key in collection) {
+      predicate(collection[key],key,collection)
+    }
+    return collection
+  }
+
+  function forEachRight(collection, predicate = identity) {
+    let keys = Object.keys(collection)
+    predicate = iteratee(predicate)
+    for (let i = keys.length - 1; i >= 0; i--) {
+      predicate(collection[keys[i]],keys[i],collection)
+    }
+    return collection
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 
   return {
@@ -1150,12 +1231,12 @@ var richlau007 = function () {
     pull,
     pullAll,
     pullAllBy,
+    pullAllWith,
     remove,
     reverse,
     slice,
 
-    sortedIndex,
-    sortedIndexBy,
+    
 
     tail,
     take,
@@ -1182,19 +1263,29 @@ var richlau007 = function () {
 
     /////////
     countBy,
+    every,
+    filter,
+    find,
+    findLast,
+    flatMap,
+    flatMapDeep,
+    flatMapDepth,
+    forEach,
+    forEachRight,
+
+
+
     
     groupBy,
     keyBy,
-    forEach,
+    map,
+    
 
     isMatch,
     matches,
     matchesProperty,
     property,
-
     bind,
-    map,
-    filter,
     get,
     get2,
     toPath,
@@ -1203,10 +1294,12 @@ var richlau007 = function () {
 
     sumBy,
     sum,
-
-    some,
-    every,
+    
+    sortedIndex,
+    sortedIndexBy,
     sortBy,
+    some,
+    
     
     
 
