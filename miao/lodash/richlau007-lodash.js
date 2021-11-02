@@ -105,56 +105,6 @@ var richlau007 = function () {
 
  
 
-  
-
-  
-  function groupBy(collection, iteratee) {
-    let obj = {}
-    for (var i = 0; i < collection.length; i++){
-      let item = collection[i]
-      let group
-      if (typeof (iteratee) === "function") {
-        //为什么 String（）没有生效？
-        group = String(iteratee(item))
-      } else {
-        group = String(item[iteratee])
-      }
-      if (!(group in obj)) {
-        obj[group] = []
-      } 
-      obj[group].push(item)
-    }
-    return obj
-  }
-
-  function keyBy(collection, iteratee) {
-    let obj = {}
-    for (var i = 0; i < collection.length; i++){
-      let item = collection[i]
-      let key
-      if (typeof (iteratee) === "function") {
-        //为什么 String（）没有生效？
-        key = String(iteratee(item))
-      } else {
-        key = String(item[iteratee])
-      }
-
-      obj[key] = (item)
-    }
-    return obj
-  }
-
-//-----------------------分界线以上需要重写08.10-----------------------------
-
-
-
-  
-
-
-
-
-
-
 //------------------------lodash的核心，阅读普通函数钱一定需要了解以下核心转化函数---------------------------------
   //就是返回自身的函数 
   function identity(value) {
@@ -287,31 +237,6 @@ var richlau007 = function () {
 
 
 
-// 输入：map([{&quot;a&quot;:{&quot;b&quot;:1}},{&quot;a&quot;:{&quot;b&quot;:2}}],&quot;a.b&quot;)
-// 输出：[undefined,undefined]
-// 期望：[1,2]
-// =================
-// 输入：map([1,2,3],function(v,i,o) {return v+i+o.length*2})
-// 输出：[&quot;106&quot;,&quot;216&quot;,&quot;326&quot;]
-// 期望：[7,9,11]
-// =================
-// 输入：map([1,2,3,4,5],function(v,i,o) {return (v+i)%2==0})
-// 输出：[true,false,true,false,true]
-// 期望：[false,false,false,false,false]
-
-
-  //map 的实现，兼容mapper  是函数和字符串
-  function map(collection, mapper) {
-    mapper = iteratee(mapper)
-    var result = []
-    for (var key in collection) {
-      result.push(mapper(collection[key],key,collection))
-    }
-    return result
-  }
-  
-
-
 
 
 
@@ -379,15 +304,7 @@ var richlau007 = function () {
 
 
   //------------------------some/every---------------------------
-  function some(collection, predicate = identity) {
-    predicate = iteratee(predicate)
-    for (var key in collection) {
-      if (predicate(collection[key])) {
-        return true
-      }
-    }
-    return false
-  }
+
  
   
 
@@ -1052,28 +969,7 @@ var richlau007 = function () {
     return sortedIndexBy(array, value)
   }
 
-  //解决对象排序的问题
-  //解决多重排序的问题
-  //第二个参数是一个数组
-  function sortBy(array, predicate = [identity]) {
-    var iter = iteratee(predicate.pop())
-    for (var i = 1; i < array.length; i++) {
-      var tmp = array[i]
-      for (var j = i - 1; j >= 0; j--) {
-        if (iter(array[j]) > iter(tmp)) array[j + 1] = array[j]
-        else {
-          break
-        }
-      }
 
-      array[j + 1] = tmp
-      // console.log(array)
-    }
-    if (predicate.length) {
-      sortBy(array, predicate)
-    }
-    return array
-  }
 
   
 
@@ -1176,7 +1072,195 @@ var richlau007 = function () {
     }
     return collection
   }
+  function groupBy(collection, predicate = identity) {
+    predicate = iteratee(predicate)
+    let obj = {}
+    for (let key in collection) {
+      let str = predicate(collection[key])
+      if (str in obj) {
+        obj[str].push(collection[key])
+      } else {
+        obj[str] = [collection[key]]
+      }
+    }
+    return obj
+  }
 
+  function includes(collection, value, fromIndex = 0) {
+    if (typeof collection === 'object') {
+      let keys = Object.keys(collection)
+      for (let i = fromIndex; i < keys.length; i++){
+        if (collection[keys[i]] === value) {
+          return true
+        }
+      }
+    } else if (typeof collection === 'string') {
+      for (let j = fromIndex; j < collection.length; j++){
+        if (collection.substring(j,j + value.length) === value) {
+          return true
+        }
+      }
+    }
+    return false
+  }
+
+  //sort  方法还没有写，后补！！
+  function invokeMap(collection, path, ...args) {
+    let result = []
+    let keys = Object.keys(collection)
+    for (let i = 0; i < collection.length; i++){
+      if (typeof path === 'Array') {
+        result.push(path[i](collection[keys[i]]),args[i])
+      } else if (typeof path === 'function') {
+        result.push(path.call(collection[keys[i]], args[0]))
+      } else if (typeof path === 'string') {
+        result.push(eval(path + '(' + collection[keys[i]] + ',' + args[0] + ')'))
+      }
+    }
+    return result
+  }
+  
+  function keyBy(collection, predicate = identity) {
+    predicate = iteratee(predicate)
+    let obj = {}
+    for (let key in collection) {
+      let str = predicate(collection[key], key, collection)
+      obj[str] = collection[key]
+    }
+    return obj
+  }
+  //map 的实现，兼容mapper  是函数和字符串
+  function map(collection, predicate) {
+    predicate = iteratee(predicate)
+    var result = []
+    for (var key in collection) {
+      result.push(predicate(collection[key], key, collection))
+    }
+    return result
+  }
+
+  //
+  function orderBy(collection,predicate = identity,orders) {
+    
+  }
+
+  function partition(collection, predicate = identity) {
+    predicate = iteratee(predicate)
+    let t = []
+    let f = []
+    let result = [t,f]
+    for (let key in collection) {
+      if (predicate(collection[key], key, collection)) {
+        t.push(collection[key])
+      } else {
+        f.push(collection[key])
+      }
+    }
+    return result
+  }
+
+  function reduce(collection, predicate = identity, accumulator) {
+    let keys = Object.keys(collection)
+    let startIdx 
+    if (accumulator) {
+      startIdx = 0
+    } else {
+      accumulator = collection[keys[0]]
+      startIdx = 1
+    }
+    for (let i = startIdx; i < keys.length; i++){
+      accumulator = predicate(accumulator,collection[keys[i]],keys[i],collection)
+    }
+    return accumulator
+  }
+
+
+  function reduceRight(collection, predicate = identity, accumulator) {
+    let keys = Object.keys(collection)
+    let startIdx
+    if (accumulator) {
+      startIdx = keys.length - 1
+    } else {
+      accumulator = collection[keys[keys.length - 1]]
+      startIdx = keys.length - 2
+    }
+    for (let i = startIdx; i >=0; i--) {
+      accumulator = predicate(accumulator, collection[keys[i]], keys[i], collection)
+    }
+    return accumulator
+  }
+
+  function reject(collection, predicate = identity) {
+    predicate = iteratee(predicate)
+    let result = []
+    for (let key in collection) {
+      if (!predicate(collection[key], key, collection)) {
+        result.push(collection[key])
+      }
+    }
+    return result
+  }
+
+  function sample(collection) {
+    return sampleSize(collection)[0]
+  }
+
+  function sampleSize(collection, n = 1) {
+    let keys = Object.keys(collection)
+    let result = []
+    for (; n > 0; n--){
+      if (keys.length == 0) break
+      let idx = Math.floor(Math.random() * keys.length) 
+      result.push(collection[keys[idx]])
+      keys.splice(idx,1)
+    }
+    return result
+  }
+
+  function shuffle(collection) {
+    return sampleSize(collection,Infinity)
+  }
+
+  function size(collection) {
+    if (typeof collection === 'object') {
+      let keys = Object.keys(collection)
+      return keys.length
+    }
+    return collection.length
+  }
+
+  function some(collection, predicate = identity) {
+    predicate = iteratee(predicate)
+    for (var key in collection) {
+      if (predicate(collection[key])) {
+        return true
+      }
+    }
+    return false
+  }
+
+  //解决对象排序的问题
+  //解决多重排序的问题
+  //第二个参数是一个数组
+  function sortBy(array, predicate = [identity]) {
+    var iter = iteratee(predicate.pop())
+    for (var i = 1; i < array.length; i++) {
+      var tmp = array[i]
+      for (var j = i - 1; j >= 0; j--) {
+        if (iter(array[j]) > iter(tmp)) array[j + 1] = array[j]
+        else {
+          break
+        }
+      }
+
+      array[j + 1] = tmp
+      // console.log(array)
+    }
+    if (predicate.length) {
+      sortBy(array, predicate)
+    }
+    return array
+  }
 
 
 
@@ -1272,14 +1356,23 @@ var richlau007 = function () {
     flatMapDepth,
     forEach,
     forEachRight,
-
-
-
-    
     groupBy,
+    includes,
+    invokeMap,
     keyBy,
     map,
-    
+    orderBy,
+    partition,
+    reduce,
+    reduceRight,
+    reject,
+    sample,
+    sampleSize,
+    shuffle,
+    size,
+    some,
+    sortBy,
+
 
     isMatch,
     matches,
@@ -1297,8 +1390,8 @@ var richlau007 = function () {
     
     sortedIndex,
     sortedIndexBy,
-    sortBy,
-    some,
+    
+    
     
     
     
