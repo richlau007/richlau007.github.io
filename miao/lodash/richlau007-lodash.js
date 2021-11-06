@@ -1264,9 +1264,158 @@ var richlau007 = function () {
 
 
 
+// -----------------------Function-----------------
+  
+
+  function curry (){}
+
+  function defer(func, ...args) {
+    let id = setTimeout(()=>func(...args), 1)
+    return id
+  }
+
+  function delay(func, wait, ...args) {
+    let id = setTimeout(() => func(...args),wait)
+    return id 
+  }
+
+  //等toArray
+  function flip(func) {
+    
+  }
+
+
+  //----------------------------
+  function castArray(value) {
+    if(!arguments.length) return []
+    if (Array.isArray(value)) return value
+    return [value]
+  }
+
+
+  function conformsTo(object, source) {
+    let key = Object.keys(source)[0]
+    if (source[key](object[key])) return true
+    return false
+  }
+
+  function eq(object, other) {
+    if (object === other) return true
+    if (typeof object == 'number' && typeof other == 'number') {
+      if (isNaN(object) && isNaN(other)) return true
+    }
+    return false
+  }
+
+  //Number.EPSILON   很小的数
+  function gt(object, other) {
+    if (object - other > Number.EPSILON) return true
+    return false
+  }
+
+  function gte(object, other) {
+    if (object - other > Number.EPSILON || object === other) return true
+    return false
+  }
+  //Number.EPSILON   很小的数
+  function lt(object, other) {
+    if (other - object > Number.EPSILON) return true
+    return false
+  }
+
+  function lte(object, other) {
+    if (other - object > Number.EPSILON || object === other) return true
+    return false
+  }
+
+
+  //is 系列  都是基于原型的  可以回看、或者看文档
+  function isArguments(value) {
+    return Object.prototype.toString.call(value) ==='[object Arguments]'
+  }
+  function isArray(value) {
+    return Object.prototype.toString.call(value) ==='[object Array]'
+  }
+  function isArrayBuffer(value) {
+    return Object.prototype.toString.call(value) ==='[object ArrayBuffer]'
+  }
 
 
 
+
+
+
+  function isBoolean(value) {
+    return Object.prototype.toString.call(value) ==='[object Boolean]'
+  }
+  
+  
+  
+  function isDate(value) {
+    return Object.prototype.toString.call(value) ==='[object Date]'
+  }
+
+
+  function isError(value) {
+    return Object.prototype.toString.call(value) ==='[object Error]'
+  }
+
+  function isFunction(value) {
+    return Object.prototype.toString.call(value) ==='[object Function]'
+  }
+  function isMap(value) {
+    return Object.prototype.toString.call(value) ==='[object Map]'
+  }
+
+  function isNaN(value) {
+    let val = value
+    if (Object.prototype.toString.call(val) === '[object Number]') {
+      
+      if (val != val) {
+        return true
+      }
+    }
+    return false
+  }
+
+  function isNull(value) {
+    return Object.prototype.toString.call(value) === '[object Null]'
+  }
+
+  function isNumber(value) {
+    return Object.prototype.toString.call(value) === '[object Number]'
+  }
+  function isObject(value) {
+    return Object.prototype.toString.call(value) === '[object Object]'
+  }
+  function isRegExp(value) {
+    return Object.prototype.toString.call(value) === '[object RegExp]'
+  }
+  function isSet(value) {
+    return Object.prototype.toString.call(value) === '[object Set]'
+  }
+  function isString(value) {
+    return Object.prototype.toString.call(value) === '[object String]'
+  }
+  function isSymbol(value) {
+    return Object.prototype.toString.call(value) === '[object Symbol]'
+  }
+  function isUndefined(value) {
+    return Object.prototype.toString.call(value) === '[object Undefined]'
+  }
+  function isWeakMap(value) {
+    return Object.prototype.toString.call(value) === '[object WeakMap]'
+  }
+  function isWeakSet(value) {
+    return Object.prototype.toString.call(value) === '[object WeakSet]'
+  }
+  
+
+
+
+
+  
+  //----------------------
 
 
 
@@ -1373,6 +1522,44 @@ var richlau007 = function () {
     some,
     sortBy,
 
+    /////Function/////////
+    curry,
+    defer,
+    delay,
+
+    //lang
+    castArray,
+    conformsTo,
+    eq,
+    gt,
+    gte,
+    lt,
+    lte,
+
+
+
+    isArguments,
+    isArray,
+    isArrayBuffer,
+
+
+    isBoolean,
+
+    isDate,
+    isError,
+    isFunction,
+    isMap,
+    isNaN,
+    isNull,
+    isNumber,
+    isObject,
+    isRegExp,
+    isSet,
+    isString,
+    isSymbol,
+    isUndefined,
+    isWeakMap,
+    isWeakSet,
 
     isMatch,
     matches,
