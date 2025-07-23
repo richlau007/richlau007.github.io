@@ -1,17 +1,36 @@
 # 30天前端面试复习计划
 
-本项目为前端开发者准备的30天面试复习计划，涵盖HTML、CSS、JavaScript、浏览器原理、性能优化、工程化、主流框架、算法与数据结构、网络与安全等核心知识点。
+## 目录
 
-## 目录结构
+- [Day 01：HTML基础标签、语义化、结构布局](docs/day01.md)
+- [Day 02：表单、input类型、原生验证、无障碍（a11y）](docs/day02.md)
+- [Day 03：HTML5新特性](docs/day03.md)
+- [Day 04：CSS选择器、优先级、盒模型、常用属性](docs/day04.md)
+- [Day 05：Flexbox布局、Grid布局](docs/day05.md)
+- [Day 06：响应式设计、媒体查询、移动端适配](docs/day06.md)
+- [Day 07：CSS预处理器、BEM命名、动画与过渡](docs/day07.md)
+- [Day 08：JavaScript数据类型、变量、作用域、闭包](docs/day08.md)
+- [Day 09：原型、继承、this、call/apply/bind](docs/day09.md)
+- [Day 10：ES6+新特性](docs/day10.md)
+- [Day 11：异步编程（Promise、async/await、事件循环）](docs/day11.md)
+- [Day 12：DOM操作、事件机制、委托、常用API](docs/day12.md)
+- [Day 13：常用设计模式](docs/day13.md)
+- [Day 14：浏览器渲染流程、回流与重绘](docs/day14.md)
+- [Day 15：性能优化](docs/day15.md)
+- [Day 16：前端安全与跨域](docs/day16.md)
+- [Day 17：模块化与包管理](docs/day17.md)
+- [Day 18：构建工具与代码规范](docs/day18.md)
+- [Day 19：CI/CD与自动化测试](docs/day19.md)
+- [Day 20：React基础](docs/day20.md)
+- [Day 21：React进阶](docs/day21.md)
+- [Day 22：Vue基础](docs/day22.md)
+- [Day 23：Vue进阶](docs/day23.md)
+- [Day 24：常见数据结构](docs/day24.md)
+- [Day 25：常用算法](docs/day25.md)
+- [Day 26：手写题&算法面试题实战](docs/day26.md)
+- [Day 27：网络基础与协议](docs/day27.md)
+- [Day 28：前端安全、加密与防护](docs/day28.md)
+- [Day 29：项目经验梳理与高频面试题](docs/day29.md)
+- [Day 30：模拟面试与查漏补缺](docs/day30.md)
 
-- `README.md`：项目简介和使用说明
-- `docs/`：每日复习计划（共30天，每天一个md文件）
-- `resources.md`：推荐学习资源
-
-## 如何使用
-
-1. 每天阅读对应的 `docs/dayXX.md` 文件，按计划复习知识点。
-2. 可结合 `resources.md` 推荐的资料进行深入学习和刷题。
-3. 建议每天做笔记和动手实践，提升复习效果。
-
-祝你面试顺利，拿到理想 offer！
+- [推荐学习资源](resources.md)
