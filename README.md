@@ -7,11 +7,8 @@
 - `README.md`：项目简介和使用说明
 - `docs/`：每日复习计划（共30天，每天一个md文件）
 - `resources.md`：推荐学习资源
+- `js-keywords-methods.md`：JavaScript 关键词与方法中英对照
 
 ## 如何使用
 
-1. 每天阅读对应的 `docs/dayXX.md` 文件，按计划复习知识点。
-2. 可结合 `resources.md` 推荐的资料进行深入学习和刷题。
-3. 建议每天做笔记和动手实践，提升复习效果。
-
-祝你面试顺利，拿到理想 offer！
+1. 每天阅读对应的 `
