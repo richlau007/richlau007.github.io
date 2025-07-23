@@ -33,4 +33,5 @@
 - [Day 29：项目经验梳理与高频面试题](docs/day29.md)
 - [Day 30：模拟面试与查漏补缺](docs/day30.md)
 
+- [JavaScript 关键词与方法中英对照](docs/js-keywords-methods.md)
 - [推荐学习资源](resources.md)
