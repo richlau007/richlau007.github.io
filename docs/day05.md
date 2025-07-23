@@ -7,9 +7,13 @@
 
 ## 典型面试题
 1. Flexbox的主轴和交叉轴如何理解？
+   - 主轴是flex-direction定义的方向（默认水平），交叉轴垂直于主轴。
 2. 如何用Flex实现水平垂直居中？
+   - 容器设置display:flex; justify-content:center; align-items:center。
 3. Grid布局的核心思想是什么？
+   - 将容器划分为行和列的网格区域，子项可精确定位到网格单元。
 4. Flex和Grid的区别与应用场景？
+   - Flex适合一维布局，Grid适合二维布局。Flex更灵活，Grid更适合复杂网格。
 
 ## 推荐实践
 - 用Flex实现常见布局（导航栏、卡片、居中）
