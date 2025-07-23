@@ -102,9 +102,76 @@ console.log(arr[0]()); // 0
    - 解释：闭包可保持变量不被销毁，实现持久化存储。
 
 ## 推荐实践
-- 编写闭包实现计数器、私有变量
-- 用let/const重写老代码，体验作用域差异
-- 手动实现类型判断工具函数
+
+### 1. 编写闭包实现计数器、私有变量
+
+#### 计数器闭包
+```js
+function createCounter() {
+  let count = 0;
+  return function() {
+    count++;
+    return count;
+  };
+}
+const counter = createCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2
+```
+
+#### 私有变量闭包
+```js
+function Person(name) {
+  let age = 18;
+  this.name = name;
+  this.getAge = function() { return age; };
+  this.setAge = function(val) { if(val > 0) age = val; };
+}
+const p = new Person('Tom');
+console.log(p.getAge()); // 18
+p.setAge(22);
+console.log(p.getAge()); // 22
+```
+
+### 2. 用let/const重写老代码，体验作用域差异
+
+#### var 的作用域问题
+```js
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 100);
+}
+// 输出：3 3 3
+```
+
+#### let 的块级作用域
+```js
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 100);
+}
+// 输出：0 1 2
+```
+
+#### const 声明常量
+```js
+const PI = 3.14;
+// PI = 3; // 报错：Assignment to constant variable.
+```
+
+### 3. 手动实现类型判断工具函数
+
+```js
+function getType(val) {
+  return Object.prototype.toString.call(val).slice(8, -1);
+}
+
+console.log(getType(123)); // 'Number'
+console.log(getType('abc')); // 'String'
+console.log(getType([1,2,3])); // 'Array'
+console.log(getType(null)); // 'Null'
+console.log(getType(undefined)); // 'Undefined'
+console.log(getType({a:1})); // 'Object'
+console.log(getType(() => {})); // 'Function'
+```
 
 ## 相关资源
 - [MDN 数据类型](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Data_structures)
